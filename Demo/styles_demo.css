@@ -1,0 +1,187 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-family: Arial, sans-serif;
+}
+
+/* ================= HEADER ================= */
+header.main-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 70px;
+
+    /* Background image */
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                url("Images/Cement\ bg-1.avif") center/cover;
+
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    z-index: 1000;
+}
+
+/* Logo + Agency Name */
+.logo-area {
+    display: flex;
+    align-items: center;
+}
+
+.agency-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    margin-right: 10px;
+}
+
+.agency-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Navigation */
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 25px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+nav ul li a:hover {
+    color: #f4b400;
+}
+
+/* ================= HERO ================= */
+#hero {
+    height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url("images/cement-placeholder.jpg") center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+}
+
+.hero-content h1 {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.hero-content p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.btn {
+    background: #f4b400;
+    color: #000;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+/* ================= SECTIONS ================= */
+section {
+    padding: 90px 40px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* ================= COUNTER / PRODUCTS ================= */
+.counter-section {
+    padding: 90px 40px;
+    background: #f7f7f7;
+}
+
+.cus-h3 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.sub-text {
+    color: #666;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.counter-box {
+    display: block;
+    background: #fff;
+    padding: 35px 20px;
+    text-decoration: none;
+    color: #000;
+    border-radius: 4px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    height: 100%;
+    text-align: center;
+}
+
+.counter-box:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+}
+
+.counter-box .icon {
+    font-size: 28px;
+    color: #d4a84f;
+    margin-bottom: 15px;
+}
+
+.counter-box h2 {
+    font-size: 28px;
+    color: #1f3c88;
+    margin-bottom: 10px;
+}
+
+.counter-box p {
+    color: #555;
+    font-size: 15px;
+}
+
+/* Brand logo inside counter box (optional) */
+.brand-logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+/* ================= GOOGLE FORM ================= */
+.google-form {
+    max-width: 750px;
+    margin: auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+
+/* ================= CONTACT ================= */
+#contact p {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* ================= FOOTER ================= */
+footer {
+    background: #1f1f1f;
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+}

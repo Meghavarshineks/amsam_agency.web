@@ -1,0 +1,55 @@
+
+.helper-text {
+    margin-bottom: 30px;
+    color: #555;
+}
+/* Date input with placeholder text inside */
+
+
+/* Hide text when date selected or focused */
+.date-wrapper input[type="date"]:focus + .date-placeholder,
+.date-wrapper input[type="date"]:valid + .date-placeholder {
+    opacity: 0;
+}
+
+/* Layout */
+.enquire-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Box */
+.enquire-box {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 6px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* Forms */
+.enquire-box form {
+    display: flex;
+    flex-direction: column;
+}
+
+.enquire-box input,
+.enquire-box select {
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Buttons */
+.whatsapp-btn {
+    background: #25d366;
+    color: #fff;
+}
+
+.call-btn {
+    background: #5fa8ff;
+    color: #fff;
+}

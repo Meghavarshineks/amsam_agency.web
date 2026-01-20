@@ -4,14 +4,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute("href"));
         if (target) {
-            // Close mobile menu if open
-            const nav = document.getElementById("nav");
-            const hamburger = document.getElementById("hamburger");
-            if (nav && hamburger) {
-                nav.classList.remove("active");
-                hamburger.classList.remove("active");
-            }
-            
             window.scrollTo({
                 top: target.offsetTop - 70,
                 behavior: "smooth"
@@ -19,25 +11,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
-
-// ================= Hamburger Menu Toggle =================
-const hamburger = document.getElementById("hamburger");
-const nav = document.getElementById("nav");
-
-if (hamburger && nav) {
-    hamburger.addEventListener("click", function() {
-        hamburger.classList.toggle("active");
-        nav.classList.toggle("active");
-    });
-
-    // Close menu when clicking outside
-    document.addEventListener("click", function(e) {
-        if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
-            nav.classList.remove("active");
-            hamburger.classList.remove("active");
-        }
-    });
-}
 
 // ================= WhatsApp Enquiry Form =================
 const whatsappForm = document.getElementById("whatsappForm");
@@ -62,16 +35,16 @@ if (whatsappForm) {
             `Cement Type: ${type}\n` +
             `Quantity: ${quantity} bags`;
 
-        const phoneNumber = "918248644610"; // <-- CHANGE TO YOUR NUMBER
+        const phoneNumber = "91number"; // <-- CHANGE TO YOUR NUMBER
 
         const whatsappURL =
             "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message);
+
 
         window.open(whatsappURL, "_blank");
     });
 }
 
-// ================= Call Back Form =================
 const callbackForm = document.getElementById("callbackForm");
 
 if (callbackForm) {
@@ -92,3 +65,4 @@ if (callbackForm) {
         window.open(url, "_blank");
     });
 }
+

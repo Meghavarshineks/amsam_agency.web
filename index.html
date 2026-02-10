@@ -1,104 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amsam Agency</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
 
-<!-- HEADER -->
-<header class="main-header">
+    <!-- HEADER -->
+    <header class="main-header">
 
-    <!-- LOGO → HOME -->
-    <a href="#hero" class="logo-link">
-        <div class="logo-area">
-            <img src="Images/Amsam_logo_transparent.png" alt="Amsam Agency Logo" class="agency-logo">
-            <span class="agency-name">Amsam Agency</span>
+        <!-- LOGO → HOME -->
+        <a href="#hero" class="logo-link">
+            <div class="logo-area">
+                <img src="Images/Amsam_logo_transparent.png" alt="Amsam Agency Logo" class="agency-logo">
+                <span class="agency-name">Amsam Agency</span>
+            </div>
+        </a>
+
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
-    </a>
 
-    <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
+        <nav id="nav">
+            <ul>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#enquire">Enquire</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <nav id="nav">
-        <ul>
-            <li><a href="#products">Products</a></li>
-            <li><a href="#enquire">Enquire</a></li>
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
-</header>
-
-<!-- HERO -->
-<section id="hero" class="parallax">
-    <div class="hero-content">
-        <img src="Images/Amsam_logo_transparent.png" alt="Amsam Agency" class="hero-logo">
-        <h1>Amsam Agency</h1>
-        <p class="hero-tagline">Cement Wholesaler</p>
-        <p class="hero-subtext">
-            Your Reliable Wholesale Partner for Premium Cement Across Tamil Nadu’s Construction Segments.
-        </p>
-        <a href="#enquire" class="btn">Enquire Now</a>
-    </div>
-</section>
+    <!-- HERO -->
+    <section id="hero" class="parallax">
+        <div class="hero-content animate-on-scroll">
+            <img src="Images/Amsam_logo_transparent.png" alt="Amsam Agency" class="hero-logo">
+            <h1>Amsam Agency</h1>
+            <p class="hero-tagline">Cement Wholesaler</p>
+            <p class="hero-subtext">
+                Your Reliable Wholesale Partner for Premium Cement Across Tamil Nadu’s Construction Segments.
+            </p>
+            <a href="#enquire" class="btn">Enquire Now</a>
+        </div>
+    </section>
 
 
-<!-- PRODUCTS -->
-<section id="products" class="parallax content-section">
-    <h2>Our Cement Brands</h2>
-    <p>We supply multiple trusted cement brands across Tamil Nadu.</p>
+    <!-- PRODUCTS -->
+    <section id="products" class="parallax content-section">
+        <div class="animate-on-scroll">
+            <h2>Our Cement Brands</h2>
+            <p>We supply multiple trusted cement brands across Tamil Nadu.</p>
+        </div>
 
-    <div class="products-grid">
+        <div class="products-grid" id="productsGrid">
+            <!-- Content populated by JS -->
+            <div class="loading-spinner">Loading brands...</div>
+        </div>
+    </section>
 
-        <!-- FEATURED PRODUCT (FULL WIDTH) -->
-        <!-- <a href="https://www.chettinadcement.com/"  -->
-         <a class="counter-box featured-product">
-            <img src="Images/Chettinad_logo.jpg" alt="Chettinad cements logo" class="brand-logo">
-            <h2>Chettinad Cement</h2>
-            <!-- <p class="featured-text">Major Wholesale Partner</p> -->
-        </a>
-
-        <!-- NORMAL PRODUCTS -->
-        <a class="counter-box">
-            <img src="Images/ACC_logo.png" alt="ACC cements logo" class="brand-logo">
-            <h2>ACC Cements</h2>
-        </a>
-
-        <a class="counter-box">
-            <img src="Images/Ultratech_logo.jpg" alt="Ultratech cements logo" class="brand-logo">
-            <h2>UltraTech Cement</h2>
-        </a>
-        
-        <a class="counter-box">
-            <img src="Images/Ramco_logo.png" alt="Ramco cements" class="logo large">
-            <h2>Ramco cement</h2>
-        </a>
-
-        <a class="counter-box">
-            <img src="Images/Dalmia_logo.webp" alt="Dalmia cements logo" class="brand-logo">
-            <h2>Dalmia Cement</h2>
-        </a> 
-
-        <a class="counter-box">
-            <img src="Images/maha_logo.png" alt="Maha cement" class="brand-logo">
-            <h2>Maha cement</h2>
-        </a>
-
-         <a class="counter-box">
-            <img src="Images/Sankar_logo.png" alt="India cements ltd" class="logo extra-large">
-            <h2>India cements Ltd</h2>
-        </a>
-    </div>
-</section>
-
-<!--  
+    <!--  
 <section id="enquire" class="enquire-section">
     <h2>Enquire</h2>
     <p class="helper-text">Choose your preferred way to contact us</p>
@@ -158,163 +128,201 @@
 -->
 
 
-<section id="enquire" class="enquire-section">
-    <h2>Enquire</h2>
-    <p class="helper-text">Choose your preferred way to contact us</p>
+    <section id="enquire" class="enquire-section">
+        <h2>Enquire</h2>
+        <p class="helper-text">Choose your preferred way to contact us</p>
 
-    <div class="enquire-grid">
+        <div class="enquire-grid">
 
-        <!-- WHATSAPP ENQUIRY -->
-        <div class="enquire-box">
-            <h3>Enquire via WhatsApp</h3>
+            <!-- WHATSAPP ENQUIRY -->
+            <div class="enquire-box animate-on-scroll delay-1">
+                <h3>Enquire via WhatsApp</h3>
 
-            <form id="whatsappForm">
+                <form id="whatsappForm">
 
-                <div class="form-row">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" required>
-                </div>
+                    <div class="form-row">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" required>
+                    </div>
 
-                <div class="form-row">
-                    <label for="address">Address:</label>
-                    <input type="text" id="address" required>
-                </div>
+                    <div class="form-row">
+                        <label for="address">Address:</label>
+                        <input type="text" id="address" required>
+                    </div>
 
-                <div class="form-row">
-                    <label for="date">Delivery Date:</label>
-                    <input type="date" id="date" required>
-                </div>
+                    <div class="form-row">
+                        <label for="date">Delivery Date:</label>
+                        <input type="date" id="date" required>
+                    </div>
 
-                <div class="form-row">
-                    <label for="brand">Brand:</label>
-                    <select id="brand" required>
-                        <option value="">Select Brand</option>
-                        <option>Chettinad</option>
-                        <option>ACC</option>
-                        <option>UltraTech</option>
-                        <option>Ramco</option>
-                        <option>Dalmia</option>
-                    </select>
-                </div>
+                    <div class="form-row">
+                        <label for="brand">Brand:</label>
+                        <select id="brand" required>
+                            <option value="">Select Brand</option>
+                            <option>Chettinad</option>
+                            <option>ACC</option>
+                            <option>UltraTech</option>
+                            <option>Ramco</option>
+                            <option>Dalmia</option>
+                        </select>
+                    </div>
 
-                <div class="form-row">
-                    <label for="type">Cement Type:</label>
-                    <input type="text" id="type" placeholder="Eg: OPC / PPC / Composite cement" required>
-                </div>
+                    <div class="form-row">
+                        <label for="type">Cement Type:</label>
+                        <input type="text" id="type" placeholder="Eg: OPC / PPC / Composite cement" required>
+                    </div>
 
-                <div class="form-row">
-                    <label for="quantity">Quantity:</label>
-                    <input type="number" id="quantity" placeholder="Bags" required>
-                </div>
+                    <div class="form-row">
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" id="quantity" placeholder="Bags" required>
+                    </div>
 
-                <button type="submit" class="btn whatsapp-btn">
-                    Send via WhatsApp
-                </button>
-            </form>
+                    <button type="submit" class="btn whatsapp-btn">
+                        Send via WhatsApp
+                    </button>
+                </form>
+            </div>
+
+            <!-- CALL BACK -->
+            <div class="enquire-box animate-on-scroll delay-2">
+                <h3>Request a Call Back</h3>
+
+                <form id="callbackForm">
+                    <div class="form-row">
+                        <label for="cb-name">Name:</label>
+                        <input type="text" id="cb-name" required>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="cb-phone">Mobile:</label>
+                        <input type="tel" id="cb-phone" required>
+                    </div>
+
+                    <button type="submit" class="btn call-btn">
+                        Request Call Back
+                    </button>
+                </form>
+
+                <p class="small-text">
+                    Or call us directly: <strong>+91 82486 44610</strong>
+                </p>
+            </div>
+
         </div>
+    </section>
 
-        <!-- CALL BACK -->
-        <div class="enquire-box">
-            <h3>Request a Call Back</h3>
 
-            <form id="callbackForm">
-                <div class="form-row">
-                    <label for="cb-name">Name:</label>
-                    <input type="text" id="cb-name" required>
-                </div>
+    <!-- ABOUT -->
+    <section id="about" class="about">
 
-                <div class="form-row">
-                    <label for="cb-phone">Mobile:</label>
-                    <input type="tel" id="cb-phone" required>
-                </div>
-
-                <button type="submit" class="btn call-btn">
-                    Request Call Back
-                </button>
-            </form>
-
-            <p class="small-text">
-                Or call us directly: <strong>+91 82486 44610</strong>
+        <div class="about-block animate-on-scroll">
+            <h3>About Us</h3>
+            <p>
+                Amsam Agency is a trusted Tamil Nadu–based wholesale supplier of premium cement brands,
+                serving residential, commercial, and infrastructure projects across the state.
+                With strong industry experience and deep regional market knowledge, we deliver
+                quality, authenticity, and dependable service.
             </p>
         </div>
 
+        <div class="divider"></div>
+
+        <div class="divider"></div>
+
+        <div class="why-block animate-on-scroll delay-1">
+            <h3>Why Amsam Agency?</h3>
+            <ul>
+                <li>Trusted wholesale cement partner</li>
+                <li>Tamil Nadu–wide supply network</li>
+                <li>Premium & authentic cement brands</li>
+                <li>Timely and reliable delivery</li>
+                <li>Transparent pricing and service</li>
+            </ul>
+        </div>
+
+    </section>
+
+
+
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact-section">
+        <h2 class="contact-title">Contact Us</h2>
+
+        <div class="contact-grid">
+
+            <div class="contact-box animate-on-scroll">
+                <p class="name">Mr. Gnanavel Kumar</p>
+                <p class="role">Founder & Proprietor</p>
+                <a href="tel:+919XXXXXXXXX">+91 9XXXXXXXXX</a>
+            </div>
+
+            <div class="contact-box animate-on-scroll delay-1">
+                <p class="name">Mr. Janaa Krishnan</p>
+                <p class="role">Proprietor</p>
+                <a href="tel:+918248644610">+91 8248644610</a>
+            </div>
+
+            <div class="contact-box animate-on-scroll delay-2">
+                <p class="name">Customer Support</p>
+                <a href="tel:+919XXXXXXXXX">+91 9XXXXXXXXX</a>
+                <a href="tel:+919XXXXXXXXX">+91 9XXXXXXXXX</a>
+            </div>
+
+        </div>
+
+        <div class="contact-footer">
+            <p>
+                📧 <a href="mailto:jvtraders961@gmail.com">jvtraders961@gmail.com</a><br>
+                📍 Punjai Puliyampatti, Tamil Nadu
+            </p>
+        </div>
+
+
+    </section>
+
+    <footer>
+        © 2026 Amsam Agency. All rights reserved.
+    </footer>
+    <!-- PRODUCT DETAIL MODAL -->
+    <div id="productModal" class="product-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+
+            <div class="modal-header">
+                <img src="" alt="Brand Logo" id="modalLogo" class="modal-brand-logo">
+                <h2 id="modalTitle">Brand Name</h2>
+                <p id="modalDesc">Brand description goes here.</p>
+            </div>
+
+            <div class="modal-body">
+                <h3>Current Prices</h3>
+                <div class="price-table-container">
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Price (per bag)</th>
+                                <th>Order</th>
+                            </tr>
+                        </thead>
+                        <tbody id="priceTableBody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="modal-actions">
+                    <p class="bulk-text">Need bulk quantity? Contact us for special rates.</p>
+                    <button class="btn whatsapp-btn" id="modalEnquireBtn">
+                        Enquire General
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
-</section>
 
-
-<!-- ABOUT -->
-<section class="about">
-
-  <div class="about-block">
-    <h3>About Us</h3>
-    <p>
-      Amsam Agency is a trusted Tamil Nadu–based wholesale supplier of premium cement brands,
-      serving residential, commercial, and infrastructure projects across the state.
-      With strong industry experience and deep regional market knowledge, we deliver
-      quality, authenticity, and dependable service.
-    </p>
-  </div>
-
-  <div class="divider"></div>
-
-  <div class="why-block">
-    <h3>Why Amsam Agency?</h3>
-    <ul>
-      <li>Trusted wholesale cement partner</li>
-      <li>Tamil Nadu–wide supply network</li>
-      <li>Premium & authentic cement brands</li>
-      <li>Timely and reliable delivery</li>
-      <li>Transparent pricing and service</li>
-    </ul>
-  </div>
-
-</section>
-
-
-
-
-<!-- CONTACT -->
-<section id="contact" class="contact-section">
-    <h2 class="contact-title">Contact Us</h2>
-
-    <div class="contact-grid">
-
-    <div class="contact-box">
-        <p class="name">Mr. Gnanavel Kumar</p>
-        <p class="role">Founder & Proprietor</p>
-        <a href="tel:+919XXXXXXXXX">+91 9XXXXXXXXX</a>
-    </div>
-
-    <div class="contact-box">
-        <p class="name">Mr. Janaa Krishnan</p>
-        <p class="role">Proprietor</p>
-        <a href="tel:+918248644610">+91 8248644610</a>
-    </div>
-
-    <div class="contact-box">
-        <p class="name">Customer Support</p>
-        <a href="tel:+919XXXXXXXXX">+91 9XXXXXXXXX</a>
-        <a href="tel:+919XXXXXXXXX">+91 9XXXXXXXXX</a>
-    </div>
-
-    </div>
-
-    <div class="contact-footer">
-    <p>
-        📧 <a href="mailto:jvtraders961@gmail.com">jvtraders961@gmail.com</a><br>
-        📍 Punjai Puliyampatti, Tamil Nadu
-    </p>
-    </div>
-
-
-</section>
-
-<footer>
-    © 2026 Amsam Agency. All rights reserved.
-</footer>
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>
-
-
-

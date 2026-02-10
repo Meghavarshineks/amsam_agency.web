@@ -738,6 +738,10 @@ footer {
 
 /* Tablet */
 @media (max-width: 992px) {
+    .parallax {
+        background-attachment: scroll;
+    }
+
     .main-header {
         padding: 0 30px;
     }

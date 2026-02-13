@@ -28,10 +28,6 @@ const brandsStaticData = {
         logo: "Images/maha_logo.png",
         desc: "Maha Cement offers ordinary portland cement and other special blends."
     },
-    "India Cements": {
-        logo: "Images/Sankar_logo.png",
-        desc: "India Cements Ltd is a veteran in the industry, offering the popular Sankar brand."
-    }
 };
 
 // Fallback Data (Used if Google Sheet fails or during setup)
@@ -44,7 +40,6 @@ const fallbackPrices = [
     { Brand: "Ramco", Type: "Supergrade", Price: "395" },
     { Brand: "Dalmia", Type: "DSP", Price: "415" },
     { Brand: "Maha", Type: "PPC", Price: "380" },
-    { Brand: "India Cements", Type: "Sankar Super Power", Price: "390" }
 ];
 
 
@@ -194,23 +189,44 @@ function openModal(brandName, staticInfo, products) {
     // Set "General Enquire" button
     document.getElementById("modalEnquireBtn").onclick = () => orderSpecific(brandName, "General Enquiry", "N/A");
 
+    // Show Modal
     modal.classList.add("active");
-    document.body.style.overflow = "hidden"; // Prevent background scrolling
+    document.body.style.overflow = "hidden";
+
+    // Add history state
+    window.history.pushState({ modalOpen: true }, "", "#price-tab");
 }
 
-// Close Modal
+// Close Modal Helper
+function closeModal() {
+    modal.classList.remove("active");
+    document.body.style.overflow = "auto";
+}
+
+// Handle Back Button
+window.addEventListener("popstate", (event) => {
+    // If we go back and the modal is active, close it
+    if (modal.classList.contains("active")) {
+        closeModal();
+    }
+});
+
+// Close Button Click
 if (closeModalBtn) {
     closeModalBtn.onclick = () => {
-        modal.classList.remove("active");
-        document.body.style.overflow = "auto";
+        // If modal is open, go back in history to trigger popstate
+        if (modal.classList.contains("active")) {
+            window.history.back();
+        }
     };
 }
 
 // Close on click outside
 window.onclick = (event) => {
     if (event.target == modal) {
-        modal.classList.remove("active");
-        document.body.style.overflow = "auto";
+        if (modal.classList.contains("active")) {
+            window.history.back();
+        }
     }
 };
 
@@ -279,7 +295,7 @@ if (whatsappForm) {
         const type = document.getElementById("type").value.trim();
         const quantity = document.getElementById("quantity").value.trim();
 
-        const message = `Hello Amsam Agency,\n\nName: ${name}\nAddress: ${address}\nDelivery Date: ${date}\nBrand: ${brand}\nCement Type: ${type}\nQuantity: ${quantity} bags`;
+        const message = `Hello Amsam Agency,\n\nName: ${name}\nDelivery Location: ${address}\nDelivery Date: ${date}\nBrand: ${brand}\nCement Type: ${type}\nQuantity: ${quantity} bags`;
         const phoneNumber = "918248644610";
         window.open("https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message), "_blank");
     });
@@ -292,9 +308,37 @@ if (callbackForm) {
         e.preventDefault();
         const name = document.getElementById("cb-name").value;
         const phone = document.getElementById("cb-phone").value;
-        const message = `Call Back Request\n\nName: ${name}\nPhone: ${phone}`;
-        const phoneNumber = "918248644610";
-        window.open("https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message), "_blank");
+        const location = document.getElementById("cb-location").value;
+        const submitBtn = callbackForm.querySelector("button[type='submit']");
+        const originalBtnText = submitBtn.innerText;
+
+        // Show loading state
+        submitBtn.innerText = "Sending...";
+        submitBtn.disabled = true;
+
+        // Web App URL provided by user
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZXKDtzIOV77mVzSFX7jHMutLwSbW5--exMe1XHfqAjstbJT3VHeMGo6PVSpULlnC1/exec";
+
+        fetch(SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ name: name, phone: phone, location: location })
+        })
+            .then(() => {
+                alert(`Thank you, ${name}! Your request has been sent. We will call you at ${phone} shortly.`);
+                callbackForm.reset();
+            })
+            .catch(error => {
+                console.error("Error!", error.message);
+                alert("Something went wrong. Please try again or call us directly.");
+            })
+            .finally(() => {
+                submitBtn.innerText = originalBtnText;
+                submitBtn.disabled = false;
+            });
     });
 }
 
@@ -318,3 +362,48 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.animate-on-scroll').forEach(el => {
     observer.observe(el);
 });
+
+
+// ================= COUNTER ANIMATION =================
+const counterObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const counters = entry.target.querySelectorAll('.achieve-number');
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const duration = 2000; // 2 seconds
+                const increment = target / (duration / 16); // 60fps
+
+                let current = 0;
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        // Format: 70000 -> 70k+ for better readability if desired, 
+                        // or just commas. User asked for "70k+" in prompt, let's logic that.
+                        // Actually logic: Just show full number with commas? 
+                        // Prompt said: "mention 70 K volume... make it like numbers getting added animation to 70k+"
+
+                        // Let's use standard number for animation and format at end
+                        counter.innerText = Math.ceil(current).toLocaleString();
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        // Final formatting
+                        if (target >= 1000) {
+                            // If it's the volume, maybe show 70,000+
+                            counter.innerText = target.toLocaleString() + "+";
+                        } else {
+                            counter.innerText = target + "+";
+                        }
+                    }
+                };
+                updateCounter();
+            });
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.5 }); // Trigger when 50% visible
+
+const achievementsSection = document.querySelector('.achievements-container');
+if (achievementsSection) {
+    counterObserver.observe(achievementsSection);
+}

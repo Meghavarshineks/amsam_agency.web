@@ -25,8 +25,16 @@ function doPost(e) {
         // Append to the sheet: [Date, Name, Phone, Location]
         sheet.appendRow([timestamp, data.name, data.phone, data.location]);
 
-        // Use this line if you want an email alert to yourself:
-        // MailApp.sendEmail("your-email@gmail.com", "New Callback Request", "Name: " + data.name + "\nPhone: " + data.phone);
+        // Send email notification (Make sure to use your correct email)
+        MailApp.sendEmail({
+            to: "jvtraders961@gmail.com, megha4401varshine@gmail.com",
+            subject: "New Callback Request from Website",
+            body: "New Enquiry Received:\n\n" +
+                "Name: " + data.name + "\n" +
+                "Phone: " + data.phone + "\n" +
+                "Location: " + data.location + "\n\n" +
+                "Check the 'Callbacks' sheet for details."
+        });
 
         return ContentService.createTextOutput(JSON.stringify({ "result": "success" })).setMimeType(ContentService.MimeType.JSON);
 

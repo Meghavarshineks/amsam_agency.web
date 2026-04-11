@@ -27,7 +27,7 @@ function doPost(e) {
 
         // Send email notification (Make sure to use your correct email)
         MailApp.sendEmail({
-            to: "jvtraders961@gmail.com, megha4401varshine@gmail.com",
+            to: "janaakrishnan0906@gmail.com, meghavarshine44@gmail.com",
             subject: "New Callback Request from Website",
             body: "New Enquiry Received:\n\n" +
                 "Name: " + data.name + "\n" +

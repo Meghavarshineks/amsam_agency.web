@@ -66,6 +66,66 @@ nav ul li a:hover {
     border-radius: 4px;
 }
 
+/* Navigation Dropdown */
+.nav-dropdown {
+    position: relative;
+}
+
+.nav-arrow {
+    display: inline-block;
+    font-size: 0.7rem;
+    margin-left: 4px;
+    vertical-align: middle;
+    transition: transform 0.3s ease;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    background: rgba(15, 30, 50, 0.98);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    padding: 10px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    z-index: 1002;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.nav-dropdown:hover .nav-arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu li {
+    margin: 0 !important;
+}
+
+.dropdown-menu li a {
+    padding: 10px 20px !important;
+    font-size: 14px;
+    transition: all 0.2s;
+    border-radius: 0 !important;
+}
+
+.dropdown-menu li a:hover {
+    background: rgba(95, 168, 255, 0.3) !important;
+    color: #fff;
+    padding-left: 25px !important;
+}
+
 /* Hamburger Menu */
 .hamburger {
     display: none;
@@ -418,6 +478,25 @@ nav ul li a:hover {
     overflow: hidden;
 }
 
+/* ================= GLOBE CAROUSEL ================= */
+.globe-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px; 
+    padding: 150px 0; /* Padding so top and bottom items can reach center */
+    perspective: 1500px;
+}
+
+.globe-item {
+    transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+    transform-origin: center center;
+    will-change: transform, opacity;
+    width: 100%;
+    max-width: 350px; 
+    margin: 0 auto;
+}
+
 .counter-box::before {
     content: "";
     position: absolute;
@@ -489,6 +568,29 @@ nav ul li a:hover {
     .featured-product {
         grid-column: span 2;
     }
+}
+
+/* ================= PRODUCT LAYOUT ================= */
+.category-title {
+    font-size: clamp(22px, 4vw, 28px);
+    color: #1f3c88;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    display: inline-block;
+}
+
+.category-title::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #5fa8ff, #007bff);
+    border-radius: 2px;
 }
 
 /* ================= ENQUIRE SECTION ================= */

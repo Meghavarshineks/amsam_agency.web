@@ -30,6 +30,13 @@ const brandsStaticData = {
     },
 };
 
+const tileAdhesiveStaticData = {
+    "Ramco Hard Worker Tile Fix": {
+        logo: "Images/hardworker_logo.png",
+        desc: "Ramco Hard Worker Tile Fix offers high-strength adhesion for various tiling needs."
+    }
+};
+
 // Fallback Data (Used if Google Sheet fails or during setup)
 const fallbackPrices = [
     { Brand: "Chettinad", Type: "PPC", Price: "390" },
@@ -40,6 +47,10 @@ const fallbackPrices = [
     { Brand: "Ramco", Type: "Supergrade", Price: "395" },
     { Brand: "Dalmia", Type: "DSP", Price: "415" },
     { Brand: "Maha", Type: "PPC", Price: "380" },
+];
+
+const tileAdhesiveFallbackPrices = [
+    { Brand: "Ramco Hard Worker Tile Fix", Type: "Standard", Price: "450" }
 ];
 
 
@@ -72,11 +83,13 @@ async function fetchPrices() {
         }
 
         renderGrid(priceData);
+        renderTileGrid(priceData);
 
     } catch (error) {
         console.warn("Using fallback data. Reason:", error);
         // If fetch fails (or CORS issue, or bad data), use fallback
         renderGrid(fallbackPrices);
+        renderTileGrid(tileAdhesiveFallbackPrices);
     }
 }
 
@@ -133,7 +146,9 @@ function renderGrid(priceList) {
         const staticInfo = brandsStaticData[brandName];
 
         const card = document.createElement("a");
-        card.className = "counter-box"; // Reverted to original class
+        card.className = "counter-box globe-item";
+        // Let's remove 'featured-product' width maxing if it's in the globe, otherwise it looks bad.
+        // But we can keep it for default. Since globe-item caps max-width, it won't stretch awkwardly.
         if (brandName === "Chettinad") card.classList.add("featured-product");
 
         card.href = "javascript:void(0)";
@@ -141,6 +156,90 @@ function renderGrid(priceList) {
         // Setup click event to open modal
         // Reverted to onclick for stability
         card.onclick = () => openModal(brandName, staticInfo, brandGroups[brandName] || []);
+
+        card.innerHTML = `
+            <img src="${staticInfo.logo}" alt="${brandName} logo" class="brand-logo">
+            <h2>${brandName}</h2>
+            <p style="margin-top:5px; color:#666; font-size:0.9rem;">Click for prices</p>
+        `;
+
+        grid.appendChild(card);
+    });
+
+    // Initialize Globe if it's the globe container
+    if (grid.classList.contains("globe-container")) {
+        initGlobe();
+    }
+}
+
+// ================= GLOBE LOGIC =================
+function initGlobe() {
+    const globeItems = document.querySelectorAll('.globe-container .globe-item');
+    if (!globeItems.length) return;
+
+    function updateGlobe() {
+        const centerY = window.innerHeight / 2;
+        
+        globeItems.forEach(item => {
+            const rect = item.getBoundingClientRect();
+            // Center of the item relative to viewport
+            const itemCenterY = rect.top + rect.height / 2;
+            // Distance from center of viewport
+            const dist = itemCenterY - centerY;
+            
+            // Map distance to rotation and scale
+            let ratio = dist / 350; 
+            if (ratio > 1) ratio = 1;
+            if (ratio < -1) ratio = -1;
+            
+            const angle = ratio * -50; // Tilt background cards away (up to 50 deg)
+            const scale = 1 - Math.abs(ratio) * 0.25; // Scale drops from 1 to 0.75
+            const opacity = 1 - Math.abs(ratio) * 0.6; // Opacity drops from 1 to 0.4
+            
+            // Apply 3D transform
+            item.style.transform = `rotateX(${angle}deg) scale(${scale})`;
+            item.style.opacity = opacity;
+        });
+    }
+
+    window.addEventListener('scroll', () => {
+        requestAnimationFrame(updateGlobe);
+    });
+    
+    // Initial call
+    updateGlobe();
+}
+
+function renderTileGrid(priceList) {
+    const grid = document.getElementById("tileAdhesiveGrid");
+    if (!grid) return;
+
+    grid.innerHTML = ""; // Clear loading text
+
+    // Group prices by Brand
+    const brandGroups = {};
+    if (priceList) {
+        priceList.forEach(item => {
+            const brandName = item.Brand ? item.Brand.trim() : "Unknown";
+            if (!brandGroups[brandName]) {
+                brandGroups[brandName] = [];
+            }
+            brandGroups[brandName].push(item);
+        });
+    }
+
+    Object.keys(tileAdhesiveStaticData).forEach(brandName => {
+        const staticInfo = tileAdhesiveStaticData[brandName];
+
+        const card = document.createElement("a");
+        card.className = "counter-box";
+        
+        // Make it full width like Chettinad
+        if (brandName === "Ramco Hard Worker Tile Fix") card.classList.add("featured-product");
+
+        card.href = "javascript:void(0)";
+
+        card.onclick = () => openModal(brandName, staticInfo, brandGroups[brandName] || tileAdhesiveFallbackPrices.filter(p => p.Brand === brandName));
 
         card.innerHTML = `
             <img src="${staticInfo.logo}" alt="${brandName} logo" class="brand-logo">

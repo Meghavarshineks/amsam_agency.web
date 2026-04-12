@@ -150,22 +150,60 @@ function renderGrid(priceList) {
 
     const card = document.createElement("a");
     card.className = "counter-box globe-item";
-    // Let's remove 'featured-product' width maxing if it's in the globe, otherwise it looks bad.
-    // But we can keep it for default. Since globe-item caps max-width, it won't stretch awkwardly.
-    if (brandName === "Chettinad") card.classList.add("featured-product");
 
     card.href = "javascript:void(0)";
 
-    // Setup click event to open modal
-    // Reverted to onclick for stability
-    card.onclick = () =>
-      openModal(brandName, staticInfo, brandGroups[brandName] || []);
+    // Click the card itself to expand/collapse
+    card.onclick = function(e) {
+      // Don't collapse if clicking an order button inside
+      if (e.target.closest('.type-order-btn')) return;
+      toggleCard(this);
+    };
+    
+    // Pre-generate the types carousel
+    const products = brandGroups[brandName] || [];
+    let typesHtml = `<div class="types-carousel">`;
+    
+    const listToRender = products.length > 0 ? products : [
+        { Type: 'OPC 43 Grade', Price: 'Call' },
+        { Type: 'OPC 53 Grade', Price: 'Call' },
+        { Type: 'PPC Blended', Price: 'Call' }
+    ];
+
+    // Image mapping: use brand-specific type images if available, else fall back to brand logo
+    // To add real images: put them in Images/ folder as BrandName_Type.jpg (e.g. Chettinad_PPC.jpg)
+    listToRender.forEach(prod => {
+        const typeSlug = (prod.Type || 'Standard').replace(/\s+/g, '_');
+        const typeImg = `Images/${brandName}_${typeSlug}.jpg`;
+        // Fallback to brand logo if specific type image doesn't exist
+        const fallbackImg = staticInfo.logo;
+
+        typesHtml += `
+            <div class="type-card">
+                <div class="type-card-name">${prod.Type || 'Standard'}</div>
+                <div class="type-card-img-wrap">
+                    <img src="${typeImg}" alt="${brandName} ${prod.Type}" 
+                         class="type-card-img" 
+                         onerror="this.src='${fallbackImg}'">
+                </div>
+                <div class="type-card-price">₹${prod.Price || 'Call'}</div>
+                <button class="type-order-btn" onclick="orderSpecific('${brandName}', '${prod.Type || 'Standard'}', '${prod.Price || 'Call'}'); event.stopPropagation();">Order Now</button>
+            </div>
+        `;
+    });
+    typesHtml += `</div>`;
 
     card.innerHTML = `
+        <div class="card-left-content">
             <img src="${staticInfo.logo}" alt="${brandName} logo" class="brand-logo">
             <h2>${brandName}</h2>
-            <p style="margin-top:5px; color:#666; font-size:0.9rem;">Click for prices</p>
-        `;
+            <div class="expand-hint">
+                <span class="expand-icon">＋</span>
+                <span class="expand-text">View Types</span>
+            </div>
+        </div>
+        ${typesHtml}
+    `;
 
     grid.appendChild(card);
   });
@@ -182,6 +220,7 @@ function initGlobe() {
   if (!globeItems.length) return;
 
   function updateGlobe() {
+    if (document.body.classList.contains("split-active")) return;
     const centerY = window.innerHeight / 2;
 
     globeItems.forEach((item) => {
@@ -238,25 +277,47 @@ function renderTileGrid(priceList) {
     const card = document.createElement("a");
     card.className = "counter-box";
 
-    // Make it full width like Chettinad
-    if (brandName === "Ramco Hard Worker Tile Fix")
-      card.classList.add("featured-product");
-
     card.href = "javascript:void(0)";
 
-    card.onclick = () =>
-      openModal(
-        brandName,
-        staticInfo,
-        brandGroups[brandName] ||
-          tileAdhesiveFallbackPrices.filter((p) => p.Brand === brandName),
-      );
+    card.onclick = function(e) {
+      if (e.target.closest('.type-order-btn')) return;
+      toggleCard(this);
+    };
+
+    const products = brandGroups[brandName] || tileAdhesiveFallbackPrices.filter((p) => p.Brand === brandName);
+    let typesHtml = `<div class="types-carousel">`;
+    
+    products.forEach(prod => {
+        const typeSlug = (prod.Type || 'Standard').replace(/\s+/g, '_');
+        const typeImg = `Images/${brandName}_${typeSlug}.jpg`;
+        const fallbackImg = staticInfo.logo;
+
+        typesHtml += `
+            <div class="type-card">
+                <div class="type-card-name">${prod.Type || 'Standard'}</div>
+                <div class="type-card-img-wrap">
+                    <img src="${typeImg}" alt="${brandName} ${prod.Type}" 
+                         class="type-card-img" 
+                         onerror="this.src='${fallbackImg}'">
+                </div>
+                <div class="type-card-price">₹${prod.Price || 'Call'}</div>
+                <button class="type-order-btn" onclick="orderSpecific('${brandName}', '${prod.Type || 'Standard'}', '${prod.Price || 'Call'}'); event.stopPropagation();">Order Now</button>
+            </div>
+        `;
+    });
+    typesHtml += `</div>`;
 
     card.innerHTML = `
+        <div class="card-left-content">
             <img src="${staticInfo.logo}" alt="${brandName} logo" class="brand-logo">
             <h2>${brandName}</h2>
-            <p style="margin-top:5px; color:#666; font-size:0.9rem;">Click for prices</p>
-        `;
+            <div class="expand-hint">
+                <span class="expand-icon">＋</span>
+                <span class="expand-text">View Types</span>
+            </div>
+        </div>
+        ${typesHtml}
+    `;
 
     grid.appendChild(card);
   });
@@ -266,6 +327,7 @@ function renderTileGrid(priceList) {
 const modal = document.getElementById("productModal");
 const closeModalBtn = document.querySelector(".close-modal");
 
+// Legacy Open Modal Function
 function openModal(brandName, staticInfo, products) {
   document.getElementById("modalLogo").src = staticInfo.logo;
   document.getElementById("modalTitle").textContent = brandName;
@@ -299,12 +361,44 @@ function openModal(brandName, staticInfo, products) {
   document.getElementById("modalEnquireBtn").onclick = () =>
     orderSpecific(brandName, "General Enquiry", "N/A");
 
-  // Show Modal
   modal.classList.add("active");
-  document.body.style.overflow = "hidden";
+  document.body.style.overflow = "hidden"; // Prevent background scroll while modal open
 
-  // Add history state
-  window.history.pushState({ modalOpen: true }, "", "#price-tab");
+  // Update URL Hash for back button support
+  history.pushState({ modal: true }, "", "#modal-open");
+}
+
+// ================= CARD EXPAND/COLLAPSE =================
+function toggleCard(card) {
+    // Close any other expanded card first and reset their icons
+    document.querySelectorAll('.counter-box.expanded, .globe-item.expanded').forEach(other => {
+        if (other !== card) {
+            other.classList.remove('expanded');
+            const otherIcon = other.querySelector('.expand-icon');
+            const otherText = other.querySelector('.expand-text');
+            if (otherIcon) otherIcon.textContent = '＋';
+            if (otherText) otherText.textContent = 'View Types';
+        }
+    });
+
+    card.classList.toggle('expanded');
+
+    // Swap icon and text
+    const icon = card.querySelector('.expand-icon');
+    const text = card.querySelector('.expand-text');
+    if (card.classList.contains('expanded')) {
+        if (icon) icon.textContent = '−';
+        if (text) text.textContent = 'Minimize';
+        setTimeout(() => {
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+    } else {
+        if (icon) icon.textContent = '＋';
+        if (text) text.textContent = 'View Types';
+    }
+
+    // Recalculate globe positions
+    window.dispatchEvent(new Event('scroll'));
 }
 
 // Close Modal Helper
@@ -362,6 +456,9 @@ function orderSpecific(brand, type, price) {
 // Smooth scroll
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", function (e) {
+    if (e.target.classList.contains("nav-arrow")) {
+        return; // Let the dropdown toggle logic handle this
+    }
     e.preventDefault();
     const target = document.querySelector(this.getAttribute("href"));
     if (target) {
@@ -370,6 +467,9 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       if (nav && hamburger) {
         nav.classList.remove("active");
         hamburger.classList.remove("active");
+        document.querySelectorAll(".nav-dropdown.active").forEach((dropdown) => {
+          dropdown.classList.remove("active");
+        });
       }
       window.scrollTo({
         top: target.offsetTop - 70,
@@ -398,13 +498,20 @@ if (hamburger && nav) {
     }
   });
 
-  // Handle mobile dropdown click
+  // Handle dropdown arrow click natively
   const dropdownToggles = document.querySelectorAll(".nav-dropdown > a");
   dropdownToggles.forEach((toggle) => {
     toggle.addEventListener("click", function (e) {
-      if (window.innerWidth <= 768) {
+      if (e.target.classList.contains("nav-arrow")) {
         e.preventDefault();
+        e.stopPropagation(); // stop smooth scroll logic from intercepting
         this.parentElement.classList.toggle("active");
+      } else {
+         // It's a click on 'Products', let the browser navigate normally
+         if (window.innerWidth <= 768 && nav && hamburger) {
+             nav.classList.remove("active");
+             hamburger.classList.remove("active");
+         }
       }
     });
   });

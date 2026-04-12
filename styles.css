@@ -456,6 +456,12 @@ nav ul li a:hover {
   gap: 30px;
   margin-top: 50px;
   padding: 0 10px;
+  justify-items: center;
+}
+
+.products-grid .counter-box {
+  max-width: 350px;
+  width: 100%;
 }
 
 .counter-box {
@@ -486,7 +492,7 @@ nav ul li a:hover {
   flex-direction: column;
   align-items: center;
   gap: 40px;
-  padding: 150px 0; /* Padding so top and bottom items can reach center */
+  padding: 20px 0 150px 0; /* Padding lowered at top to reduce gap, kept at bottom so items can reach center */
   perspective: 1500px;
 }
 
@@ -1654,4 +1660,485 @@ nav ul li a:hover {
 
 .delay-2 {
   transition-delay: 0.4s;
+}
+
+/* Scroll Hint */
+.scroll-hint {
+  color: #8ab4f8;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  animation: bounceHint 2s infinite;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  display: inline-block;
+}
+
+@keyframes bounceHint {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(6px);
+  }
+  60% {
+    transform: translateY(3px);
+  }
+}
+
+/* ================= SPLIT VIEW & MOBILE DRAWER ================= */
+body.split-active {
+  overflow: hidden; /* Prevent background scrolling */
+}
+
+/* ================= UNIFIED BOX (MORPHED) ================= */
+.card-left-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  transition: width 0.4s;
+}
+
+.morphed-box {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) rotateX(0deg) scale(1) !important;
+  width: 85vw !important;
+  max-width: 1000px !important;
+  height: 80vh !important;
+  display: flex !important;
+  flex-direction: row;
+  z-index: 1000;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.7);
+  margin: 0 !important;
+  padding: 0 !important;
+  background: rgba(15, 30, 50, 0.95);
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: default;
+}
+
+.morphed-box .card-left-content {
+  width: 40%;
+  padding: 40px;
+  background: rgba(10, 20, 35, 0.6);
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+.morphed-box .brand-logo {
+  max-width: 250px;
+  max-height: 150px;
+}
+
+.card-right-content {
+  width: 60%;
+  padding: 40px 40px 40px 30px;
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.morphed-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 2.5rem;
+  color: #fff;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.2s;
+  line-height: 1;
+}
+
+.morphed-close:hover {
+  transform: scale(1.1);
+  color: #ff4c4c;
+}
+
+.pane-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* The sub-product cards */
+.sub-product-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: transform 0.3s, background 0.3s;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.sub-product-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sub-product-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  background: rgba(255,255,255,0.8);
+  border-radius: 8px;
+  padding: 5px;
+}
+
+.sub-product-info h4 {
+  color: #fff;
+  margin: 0 0 5px 0;
+  font-size: 1.2rem;
+}
+
+.sub-product-info p {
+  color: #a3c2e0;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.sub-product-price {
+  margin-left: auto;
+  font-weight: 700;
+  color: #5fa8ff;
+  font-size: 1.2rem;
+}
+
+/* Fade out other cards */
+.globe-item.fade-out-split, .counter-box.fade-out-split {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* Overlay */
+.split-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.8);
+  z-index: 990;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s;
+}
+
+body.split-active .split-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* MOBILE BOX */
+@media (max-width: 900px) {
+  .morphed-box {
+    flex-direction: column;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    transform: translate(0, 0) !important;
+    height: 85vh !important;
+    width: 100vw !important;
+    border-radius: 24px 24px 0 0 !important;
+    animation: slideUpDrawer 0.4s ease-out;
+  }
+  @keyframes slideUpDrawer {
+    from { transform: translateY(100%) !important; }
+    to { transform: translateY(0) !important; }
+  }
+  .morphed-box .card-left-content {
+    width: 100%;
+    height: 30%;
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 24px 24px 0 0;
+  }
+  .morphed-box .brand-logo {
+     max-height: 80px;
+  }
+  .card-right-content {
+    width: 100%;
+    height: 70%;
+    padding: 20px;
+  }
+  .morphed-close {
+    top: 15px;
+    right: 15px;
+  }
+}
+@media (max-width: 450px) {
+   .sub-product-card {
+     flex-direction: column;
+     align-items: flex-start;
+     gap: 10px;
+   }
+   .sub-product-price {
+     margin-left: 0;
+   }
+}
+
+/* ================= CARD EXPAND / COLLAPSE ================= */
+
+/* Expand / Minimize hint button */
+.expand-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 18px;
+  padding: 8px 20px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #e8f0fe, #dce6f5);
+  border: 1px solid rgba(95, 168, 255, 0.25);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.expand-hint:hover {
+  background: linear-gradient(135deg, #d4e4fd, #c5d8f2);
+  box-shadow: 0 4px 12px rgba(95, 168, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.expand-icon {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #007bff;
+  line-height: 1;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(0, 123, 255, 0.12);
+  transition: all 0.3s ease;
+}
+
+.expanded .expand-icon {
+  background: rgba(0, 123, 255, 0.2);
+  color: #0056b3;
+}
+
+.expand-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1f3c88;
+  letter-spacing: 0.3px;
+}
+
+.expanded .expand-text {
+  color: #1f3c88;
+}
+
+/* Override products-grid max-width when expanded */
+.products-grid .counter-box.expanded {
+  max-width: 900px;
+}
+
+/* Types carousel — hidden by default */
+.types-carousel {
+  display: none;
+  flex-direction: row;
+  gap: 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 15px 10px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(95, 168, 255, 0.4) transparent;
+}
+
+.types-carousel::-webkit-scrollbar {
+  height: 6px;
+}
+
+.types-carousel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.types-carousel::-webkit-scrollbar-thumb {
+  background: rgba(95, 168, 255, 0.4);
+  border-radius: 10px;
+}
+
+/* ---- EXPANDED STATE ---- */
+.counter-box.expanded {
+  max-width: 900px;
+  width: 90vw;
+  flex-direction: row;
+  align-items: stretch;
+  padding: 0;
+  cursor: default;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.22);
+  border: 2px solid #5fa8ff;
+  min-height: 320px;
+  border-radius: 20px;
+  z-index: 10;
+}
+
+.counter-box.expanded .expand-hint {
+  background: linear-gradient(135deg, #d4e4fd, #c5d8f2);
+  border-color: rgba(0, 123, 255, 0.3);
+}
+
+.counter-box.expanded .card-left-content {
+  width: 200px;
+  min-width: 180px;
+  padding: 30px 20px;
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+}
+
+.counter-box.expanded .types-carousel {
+  display: flex;
+  flex: 1;
+  align-items: stretch;
+  animation: fadeSlideIn 0.35s ease-out;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ---- INDIVIDUAL TYPE CARD ---- */
+.type-card {
+  flex: 0 0 160px;
+  min-width: 150px;
+  background: linear-gradient(145deg, #f8fbff, #eef3fa);
+  border: 1px solid rgba(31, 60, 136, 0.1);
+  border-radius: 14px;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  cursor: default;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+  scroll-snap-align: start;
+}
+
+.type-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  border-color: rgba(95, 168, 255, 0.3);
+}
+
+.type-card-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1f3c88;
+  letter-spacing: 0.3px;
+  line-height: 1.3;
+}
+
+.type-card-img-wrap {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 8px;
+}
+
+.type-card-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.type-card:hover .type-card-img {
+  transform: scale(1.08);
+}
+
+.type-card-price {
+  font-weight: 800;
+  color: #1f3c88;
+  font-size: 1.15rem;
+}
+
+.type-order-btn {
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 18px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 10px rgba(37, 211, 102, 0.25);
+  white-space: nowrap;
+}
+
+.type-order-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(37, 211, 102, 0.35);
+  background: linear-gradient(135deg, #2ee374, #159e8b);
+}
+
+/* ---- MOBILE: expand downward, carousel still horizontal ---- */
+@media (max-width: 768px) {
+  .counter-box.expanded {
+    flex-direction: column;
+    width: 95vw;
+    max-width: 95vw;
+    min-height: unset;
+  }
+
+  .counter-box.expanded .card-left-content {
+    width: 100%;
+    min-width: unset;
+    padding: 20px 20px 12px;
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .counter-box.expanded .types-carousel {
+    width: 100%;
+    padding: 12px;
+    animation-name: fadeSlideDown;
+  }
+
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .type-card {
+    flex: 0 0 140px;
+    min-width: 130px;
+    padding: 12px 10px;
+  }
+
+  .type-card-img-wrap {
+    height: 80px;
+  }
 }

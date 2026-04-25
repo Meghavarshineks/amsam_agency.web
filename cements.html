@@ -1,286 +1,171 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amsam Agency</title>
-    <link rel="icon" type="image/png" href="Images/Amsam_favicon_192.png">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com/">
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-</head>
-
-<body>
-
-  
-
-    <!-- HEADER -->
-    <header class="main-header">
-
-        <!-- LOGO → HOME -->
-        <a href="index.html" class="logo-link">
-            <div class="logo-area">
-                <img src="Images/Amsam_logo_transparent.png" alt="Amsam Agency Logo" class="agency-logo">
-                <span class="agency-name">Amsam Agency</span>
-            </div>
-        </a>
-
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-
-        <nav id="nav">
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li class="nav-dropdown">
-                    <a href="index.html#product-list">Products <span class="nav-arrow" style="padding: 10px; margin: -10px 0 -10px 4px; pointer-events: auto;">▼</span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="cements.html">Cements</a></li>
-                        <li><a href="tile-adhesive.html">Tile Adhesive</a></li>
-                    </ul>
-                </li>
-                <li><a href="index.html#enquire">Enquire</a></li>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amsam Agency - Cements</title>
+    <link rel="icon" type="image/png" href="Images/Amsam_favicon_192.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="main-header">
+        <a href="index.html" class="logo-link">
+            <div class="logo-area">
+                <img src="Images/Amsam_logo_transparent.png" alt="Amsam Agency Logo" class="agency-logo">
+                <span class="agency-name">Amsam Agency</span>
+            </div>
+        </a>
+        <div class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </div>
+        <nav id="nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="nav-dropdown">
+                    <a href="index.html#product-list">Products <span class="nav-arrow">▼</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="cements.html">Cements</a></li>
+                        <li><a href="tile-adhesive.html">Tile Adhesive</a></li>
+                    </ul>
+                </li>
+                <li><a href="#enquire">Enquire</a></li>
                 <li><a href="#" class="nav-calc-btn">Calculator</a></li>
-        <li><a href="index.html#about">About Us</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- CEMENTS CATALOG -->
-    <section id="products" class="content-section" style="padding-top: 150px; min-height: 80vh; background-image: linear-gradient(rgba(10, 25, 45, 0.85), rgba(10, 25, 45, 0.85)), url('Images/Cements_BG.jpeg') !important; background-attachment: fixed !important; background-position: center !important; background-size: cover !important;">
-        <div class="animate-on-scroll" style="margin-bottom: 5px;">
-            <h2 style="font-size: clamp(32px, 5vw, 42px); color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.5); margin-bottom: 5px;">Cements Catalog</h2>
-            <p style="color: #d1e0ef; font-size: 1.1rem; margin-bottom: 0;">Browse our trusted cement brands and pricing.</p>
-            <p class="scroll-hint">Scroll to view more brands ↓</p>
-        </div>
-
-        <div class="globe-container" id="productsGrid" style="margin-top: 15px !important;">
-            <!-- Content populated by JS -->
-            <div class="loading-spinner">Loading brands...</div>
-        </div>
-    </section>
-    </section>
-
-    <!--  
-<section id="enquire" class="enquire-section">
-    <h2>Enquire</h2>
-    <p class="helper-text">Choose your preferred way to contact us</p>
-
-    <div class="enquire-grid">
-
-        
-        <div class="enquire-box">
-            <h3>Enquire via WhatsApp</h3>
-
-            <form id="whatsappForm">
-                <input type="text" id="name" placeholder="Your Name" required>
-                <input type="text" id="address" placeholder="Delivery Address" required>
-                <div class="date-wrapper">
-                    <span class="date-placeholder">Delivery Date</span>
-                    <input type="date" id="date" required>
-                </div>
-
-
-
-                <select id="brand" required>
-                    <option value="">Select Brand</option>
-                    <option>Chettinad</option>
-                    <option>ACC</option>
-                    <option>UltraTech</option>
-                    <option>Ramco</option>
-                    <option>Dalmia</option>
-                </select>
-
-                <input type="text" id="type" placeholder="Cement Type (OPC / PPC)" required>
-                <input type="number" id="quantity" placeholder="Quantity (Bags)" required>
-                <!-- <input type="number" id="mobile" placeholder="Your Number" required> 
-                <button type="submit" class="btn whatsapp-btn">
-                    Send via WhatsApp
-                </button>
-            </form>
-        </div>
-
-        <!-- CALL BACK 
-        <div class="enquire-box">
-            <h3>Request a Call Back</h3>
-              
-            <form id="callbackForm">
-              <input type="text" id="cb-name" placeholder="Your Name" required>
-              <input type="tel" id="cb-phone" placeholder="Mobile Number" required>
-              <button type="submit" class="btn call-btn">Request Call Back</button>
-            </form>
-
-
-            <p class="small-text">
-                Or call us directly: <strong>+91 82486 44610</strong>
-            </p>
-        </div>
-
-    </div>
-</section>
--->
-
-
-    <section id="enquire" class="enquire-section">
-        <h2>Enquire</h2>
-        <p class="helper-text">Choose your preferred way to contact us</p>
-
-        <div class="enquire-grid">
-
-            <!-- WHATSAPP ENQUIRY -->
-            <div class="enquire-box animate-on-scroll delay-1">
-                <h3>Enquire via WhatsApp</h3>
-
-                <form id="whatsappForm">
-
-                    <div class="form-row">
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" required>
-                    </div>
-
-                    <div class="form-row">
-                        <label for="address">Delivery Location:</label>
-                        <input type="text" id="address" required>
-                    </div>
-
-                    <div class="form-row">
-                        <label for="cb-name">Name:</label>
-                        <input type="text" id="cb-name" required>
-                    </div>
-
-                    <div class="form-row">
-                        <label for="cb-phone">Mobile:</label>
-                        <input type="tel" id="cb-phone" required>
-                    </div>
-
-                    <div class="form-row">
-                        <label for="cb-location">Delivery Location:</label>
-                        <input type="text" id="cb-location" required>
-                    </div>
-
-                    <button type="submit" class="btn call-btn">
-                        Request a Call Back
-                    </button>
-                </form>
-
-                <p class="small-text">
-                    Or call us directly: <strong>+91 82486 44610</strong>
-                </p>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- FLOATING WHATSAPP BUTTON -->
-    <a href="https://wa.me/918248644610?text=Hello%20Amsam%20Agency,%20I%20have%20an%20enquiry." class="float-whatsapp"
-        target="_blank">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
-            <path
-                d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z" />
-        </svg>
-    </a>
-
-    <!-- SPLIT VIEW OVERLAY & UNIFIED MODAL -->
-    <div class="split-overlay" id="splitOverlay" onclick="closeSplitView()"></div>
-    <div id="morphedBoxContainer" class="morphed-box" style="visibility: hidden; opacity: 0; pointer-events: none;">
-        <!-- Dynamically injected by openSplitView -->
-    </div>
-
-    <!-- BACK TO HOME -->
-    <section style="background: #060f1e; padding: 50px 20px; text-align: center;">
-        <p style="color: rgba(255,255,255,0.55); font-size: 0.9rem; margin-bottom: 20px;">For About Us, Contact &amp; more</p>
-        <a href="index.html" style="
-            display: inline-flex; align-items: center; gap: 10px;
-            background: linear-gradient(135deg, #1f3c88, #2a52b8);
-            color: #fff; text-decoration: none;
-            padding: 14px 32px; border-radius: 50px;
-            font-size: 1rem; font-weight: 600; letter-spacing: 0.5px;
-            box-shadow: 0 4px 20px rgba(31,60,136,0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
-        " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(31,60,136,0.55)';"
-           onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 20px rgba(31,60,136,0.4)';">
-            ← Back to Home
-        </a>
-    </section>
-
-    <footer>© 2026 Amsam Agency. All rights reserved.</footer>
-
-    <!-- PRODUCT DETAIL MODAL -->
-    <div id="productModal" class="product-modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div class="modal-header">
-                <img src="" alt="Brand Logo" id="modalLogo" class="modal-brand-logo">
-                <h2 id="modalTitle">Brand Name</h2>
-                <p id="modalDesc">Brand description goes here.</p>
-            </div>
-            <div class="modal-body">
-                <h3>Current Prices</h3>
-                <div class="price-table-container">
-                    <table class="price-table">
-                        <thead>
-                            <tr>
-                                <th>Type</th>
-                                <th>Price (per bag)</th>
-                                <th>Order</th>
-                            </tr>
-                        </thead>
-                        <tbody id="priceTableBody">
-                            <!-- Populated by JS -->
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-actions">
-                    <p class="bulk-text">Need bulk quantity? Contact us for special rates.</p>
-                    <button class="btn whatsapp-btn" id="modalEnquireBtn">Enquire General</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+                <li><a href="index.html#about">About Us</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- CEMENTS CATALOG -->
+    <section id="products" class="content-section" style="padding-top: 150px; min-height: 80vh; background-image: linear-gradient(rgba(10, 25, 45, 0.85), rgba(10, 25, 45, 0.85)), url('Images/Cements_BG.jpeg') !important; background-attachment: fixed !important; background-position: center !important; background-size: cover !important;">
+        <div class="animate-on-scroll" style="margin-bottom: 5px;">
+            <h2 style="font-size: clamp(32px, 5vw, 42px); color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.5); margin-bottom: 5px;">Cements Catalog</h2>
+            <p style="color: #d1e0ef; font-size: 1.1rem; margin-bottom: 0;">Browse our trusted cement brands and pricing.</p>
+            <p class="scroll-hint">Scroll to view more brands ↓</p>
+        </div>
+        <div class="globe-container" id="productsGrid" style="margin-top: 15px !important;">
+            <div class="loading-spinner">Loading brands...</div>
+        </div>
+    </section>
+
+    <!-- ENQUIRE SECTION -->
+    <section id="enquire" class="enquire-section">
+        <h2>Enquire</h2>
+        <p class="helper-text">Choose your preferred way to contact us</p>
+        <div class="enquire-grid">
+            <!-- WHATSAPP ENQUIRY -->
+            <div class="enquire-box animate-on-scroll delay-1">
+                <h3>Enquire via WhatsApp</h3>
+                <form id="whatsappForm">
+                    <div class="form-row"><label for="name">Name:</label><input type="text" id="name" required /></div>
+                    <div class="form-row"><label for="address">Delivery Location:</label><input type="text" id="address" required /></div>
+                    <div class="form-row"><label for="date">Delivery Date:</label><input type="date" id="date" required /></div>
+                    <div class="form-row">
+                        <label for="brand">Brand:</label>
+                        <select id="brand" required>
+                            <option value="">Select Brand</option>
+                            <option>Chettinad</option><option>ACC</option><option>UltraTech</option><option>Ramco</option><option>Dalmia</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="type">Product Type:</label>
+                        <select id="type" required disabled><option value="">Select Brand First</option></select>
+                    </div>
+                    <div class="form-row"><label for="quantity">Quantity:</label><input type="number" id="quantity" placeholder="Bags" required /></div>
+                    <button type="submit" class="btn whatsapp-btn">Enquire via WhatsApp</button>
+                </form>
+            </div>
+            <!-- CALL BACK -->
+            <div class="enquire-box animate-on-scroll delay-2">
+                <h3>Request a Call Back</h3>
+                <form id="callbackForm">
+                    <div class="form-row"><label for="cb-name">Name:</label><input type="text" id="cb-name" required /></div>
+                    <div class="form-row"><label for="cb-phone">Mobile:</label><input type="tel" id="cb-phone" required /></div>
+                    <div class="form-row"><label for="cb-location">Delivery Location:</label><input type="text" id="cb-location" required /></div>
+                    <button type="submit" class="btn call-btn">Request a Call Back</button>
+                </form>
+                <p class="small-text">Or call us directly: <strong>+91 82486 44610</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FLOATING WHATSAPP BUTTON -->
+    <a href="https://wa.me/918248644610?text=Hello%20Amsam%20Agency,%20I%20have%20an%20enquiry." class="float-whatsapp" target="_blank">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z" />
+        </svg>
+    </a>
+
+    <!-- SPLIT VIEW OVERLAY & UNIFIED MODAL -->
+    <div class="split-overlay" id="splitOverlay" onclick="closeSplitView()"></div>
+    <div id="morphedBoxContainer" class="morphed-box" style="visibility: hidden; opacity: 0; pointer-events: none;"></div>
+
+    <!-- BACK TO HOME -->
+    <section style="background: #060f1e; padding: 50px 20px; text-align: center;">
+        <p style="color: rgba(255,255,255,0.55); font-size: 0.9rem; margin-bottom: 20px;">For About Us, Contact &amp; more</p>
+        <a href="index.html" class="btn" style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 32px; border-radius: 50px;">← Back to Home</a>
+    </section>
+
+    <footer>© 2026 Amsam Agency. All rights reserved.</footer>
+
+    <!-- PRODUCT DETAIL MODAL -->
+    <div id="productModal" class="product-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <img src="" alt="Brand Logo" id="modalLogo" class="modal-brand-logo">
+                <h2 id="modalTitle">Brand Name</h2>
+                <p id="modalDesc">Brand description goes here.</p>
+            </div>
+            <div class="modal-body">
+                <h3>Current Prices</h3>
+                <div class="price-table-container">
+                    <table class="price-table">
+                        <thead><tr><th>Type</th><th>Price (per bag)</th><th>Order</th></tr></thead>
+                        <tbody id="priceTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="modal-actions">
+                    <p class="bulk-text">Need bulk quantity? Contact us for special rates.</p>
+                    <button class="btn whatsapp-btn" id="modalEnquireBtn">Enquire General</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Floating Calculator -->
-    <div id="floatCalc" class="float-calculator" title="Cement Calculator">
-      🧮
-    </div>
+    <div id="floatCalc" class="float-calculator" title="Cement Calculator">🧮</div>
 
     <!-- Calculator Modal -->
     <div id="calcModal" class="calc-modal">
-      <div class="calc-modal-content">
-        <span class="calc-close">&times;</span>
-        <h3>Cement Calculator</h3>
-        <div class="calc-form-group">
-          <label for="workType">Type of Work:</label>
-          <select id="workType">
-            <option value="0.4">Concrete Slab / Roof (M20)</option>
-            <option value="0.12">Brickwork / Masonry (9" wall)</option>
-            <option value="0.08">Plastering (12mm thickness)</option>
-          </select>
+        <div class="calc-modal-content">
+            <span class="calc-close">&times;</span>
+            <h3>Cement Calculator</h3>
+            <div class="calc-form-group">
+                <label for="workType">Type of Work:</label>
+                <select id="workType">
+                    <option value="0.4">Concrete Slab / Roof (M20)</option>
+                    <option value="0.12">Brickwork / Masonry (9" wall)</option>
+                    <option value="0.08">Plastering (12mm thickness)</option>
+                </select>
+            </div>
+            <div class="calc-form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div><label for="calcLength">Length (Feet):</label><input type="number" id="calcLength" placeholder="e.g. 50" min="0"></div>
+                <div><label for="calcHeight">Height (Feet):</label><input type="number" id="calcHeight" value="10" min="0"></div>
+            </div>
+            <input type="hidden" id="areaInput">
+            <div class="calc-result-box">
+                <p>Estimated Required:</p>
+                <div class="calc-result-number" id="calcResult">0 Bags</div>
+            </div>
         </div>
-        <div class="calc-form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-          <div>
-            <label for="calcLength">Length (Feet):</label>
-            <input type="number" id="calcLength" placeholder="e.g. 50" min="0">
-          </div>
-          <div>
-            <label for="calcHeight">Height (Feet):</label>
-            <input type="number" id="calcHeight" value="10" min="0">
-          </div>
-        </div>
-        <input type="hidden" id="areaInput">
-        <div class="calc-result-box">
-          <p>Estimated Required:</p>
-          <div class="calc-result-number" id="calcResult">0 Bags</div>
-        </div>
-      </div>
     </div>
 
-  </body>
+    <script src="script.js"></script>
+</body>
 </html>

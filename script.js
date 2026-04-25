@@ -293,6 +293,9 @@ function renderGrid(priceList) {
     });
     typesHtml += `</div>`;
 
+    const hasManyTypes = products.length > 2;
+    const scrollHintHtml = hasManyTypes ? `<div class="scroll-hint-overlay"><span>Scroll 👉</span></div>` : '';
+
     card.innerHTML = `
         <div class="card-left-content">
             <img src="${staticInfo.logo}" alt="${brandName} logo" class="brand-logo">
@@ -303,6 +306,7 @@ function renderGrid(priceList) {
             </div>
         </div>
         ${typesHtml}
+        ${scrollHintHtml}
     `;
 
     grid.appendChild(card);
@@ -451,6 +455,9 @@ function renderTileGrid(priceList) {
     });
     typesHtml += `</div>`;
 
+    const hasManyTypes = products.length > 2;
+    const scrollHintHtml = hasManyTypes ? `<div class="scroll-hint-overlay"><span>Scroll 👉</span></div>` : '';
+
     card.innerHTML = `
         <div class="card-left-content">
             <img src="${staticInfo.logo}" alt="${brandName} logo" class="brand-logo">
@@ -461,6 +468,7 @@ function renderTileGrid(priceList) {
             </div>
         </div>
         ${typesHtml}
+        ${scrollHintHtml}
     `;
 
     grid.appendChild(card);

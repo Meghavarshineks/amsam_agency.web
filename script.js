@@ -41,7 +41,7 @@ const brandsStaticData = {
 
 const tileAdhesiveStaticData = {
   "Ramco Hard Worker Tile Fix": {
-    logo: "Images/hardworker_logo.png",
+    logo: "Images/hardworker_logo.jpeg",
     desc: "Ramco Hard Worker Tile Fix offers high-strength adhesion for various tiling needs.",
   },
 };
@@ -160,7 +160,7 @@ function setupDynamicForms(priceList) {
   // Since there might be multiple forms across different pages, queryall
   const brandSelects = document.querySelectorAll("select#brand, select[id='brand']");
   const typeInputs = document.querySelectorAll("input#type, select#type, [id='type']");
-  
+
   if (brandSelects.length === 0 || typeInputs.length === 0) return;
 
   // Convert any string input type fields into true selects (so it works on un-edited HTML pages too)
@@ -173,7 +173,7 @@ function setupDynamicForms(priceList) {
       select.disabled = true;
       select.innerHTML = '<option value="">Select Brand First</option>';
       parent.replaceChild(select, typeEl);
-      
+
       const label = parent.querySelector('label[for="type"]');
       if (label) label.textContent = "Product Type:";
     }
@@ -186,7 +186,7 @@ function setupDynamicForms(priceList) {
     // Attempt to pair the brand dropdown with the nearest type dropdown in the same form
     const form = brandSelect.closest("form");
     const typeSelect = form ? form.querySelector("select[id='type']") : typeSelects[index];
-    
+
     if (!typeSelect) return;
 
     // Populate brand dropdown based exactly on sheet
@@ -202,7 +202,7 @@ function setupDynamicForms(priceList) {
     brandSelect.addEventListener("change", function () {
       const chosenBrand = this.value;
       typeSelect.innerHTML = '<option value="">Select Product Type</option>';
-      
+
       if (brandTypes[chosenBrand]) {
         Array.from(brandTypes[chosenBrand]).sort().forEach(type => {
           const opt = document.createElement("option");
@@ -819,7 +819,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (floatCalcBtn) {
     floatCalcBtn.addEventListener('click', openModal);
   }
-  
+
   navCalcBtns.forEach(btn => {
     btn.addEventListener('click', openModal);
   });

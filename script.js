@@ -187,8 +187,18 @@ function renderGrid(priceList) {
     let typesHtml = `<div class="types-carousel">`;
 
     products.forEach(prod => {
-      const typeSlug = (prod.Type || 'Standard').replace(/\s+/g, '_');
-      const typeBasePath = `Images/${brandName}_${typeSlug}`;
+      let typeBasePath;
+      let imgVal = prod['Image Number'] || prod['image number'] || prod['Image number'] || prod['Image'] || prod.image_number;
+      if (imgVal && imgVal.trim()) {
+        imgVal = imgVal.trim();
+        if (!imgVal.toLowerCase().startsWith('image_')) {
+          imgVal = 'image_' + imgVal;
+        }
+        typeBasePath = `Images/${imgVal}`;
+      } else {
+        const typeSlug = (prod.Type || 'Standard').replace(/\s+/g, '_');
+        typeBasePath = `Images/${brandName}_${typeSlug}`;
+      }
       const fallbackImg = staticInfo.logo;
 
       const priceDisplay = (prod.Price && prod.Price.trim()) ? `₹${prod.Price.trim()}` : `Contact us`;
@@ -335,8 +345,18 @@ function renderTileGrid(priceList) {
     let typesHtml = `<div class="types-carousel">`;
 
     products.forEach(prod => {
-      const typeSlug = (prod.Type || 'Standard').replace(/\s+/g, '_');
-      const typeBasePath = `Images/${brandName}_${typeSlug}`;
+      let typeBasePath;
+      let imgVal = prod['Image Number'] || prod['image number'] || prod['Image number'] || prod['Image'] || prod.image_number;
+      if (imgVal && imgVal.trim()) {
+        imgVal = imgVal.trim();
+        if (!imgVal.toLowerCase().startsWith('image_')) {
+          imgVal = 'image_' + imgVal;
+        }
+        typeBasePath = `Images/${imgVal}`;
+      } else {
+        const typeSlug = (prod.Type || 'Standard').replace(/\s+/g, '_');
+        typeBasePath = `Images/${brandName}_${typeSlug}`;
+      }
       const fallbackImg = staticInfo.logo;
 
       const priceDisplay = (prod.Price && prod.Price.trim()) ? `₹${prod.Price.trim()}` : `Contact us`;

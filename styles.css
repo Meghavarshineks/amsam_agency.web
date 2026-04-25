@@ -793,7 +793,7 @@ nav ul li a:hover {
 
 /* Custom bullet points */
 .why-block li::before {
-  content: "✓";
+  content: "âœ“";
   color: #25d366;
   font-weight: bold;
   display: inline-block;
@@ -1966,7 +1966,7 @@ body.split-active .split-overlay {
   max-width: 900px;
 }
 
-/* Types carousel — hidden by default */
+/* Types carousel â€” hidden by default */
 .types-carousel {
   display: none;
   flex-direction: row;
@@ -2154,3 +2154,94 @@ body.split-active .split-overlay {
     height: 80px;
   }
 }
+
+/* ================= PAGE LOADER ================= */
+#page-loader {
+  position: fixed; inset: 0; z-index: 99999;
+  background: linear-gradient(160deg, #f8f9fa 0%, #e9ecef 100%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+#page-loader.loader-done { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.logo-scene {
+  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+
+.logo-reveal-container {
+  position: relative; width: 140px; height: 140px;
+}
+
+/* Faded/Blueprint version of the logo */
+.logo-ghost {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain;
+  /* Faint sketch waiting to be colored */
+  filter: grayscale(100%) opacity(0.15);
+}
+
+/* Colored logo revealing */
+.logo-colored-wrapper {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  clip-path: inset(0 100% 0 0);
+  -webkit-clip-path: inset(0 100% 0 0); /* iOS fix */
+  animation: logoRevealAnim 1.8s cubic-bezier(0.75, 0, 0.25, 1) 0.3s forwards;
+}
+
+@keyframes logoRevealAnim {
+  0%   { clip-path: inset(0 100% 0 0); -webkit-clip-path: inset(0 100% 0 0); }
+  100% { clip-path: inset(0 0% 0 0); -webkit-clip-path: inset(0 0% 0 0); }
+}
+
+.logo-colored {
+  width: 140px; height: 140px; object-fit: contain;
+  filter: drop-shadow(0 4px 15px rgba(0,0,0,0.15));
+}
+
+/* Glowing laser scanning across the logo */
+.scanner-line {
+  position: absolute; top: -10%; left: 0; width: 3px; height: 120%;
+  background: #3b82f6; /* blue laser */
+  box-shadow: 0 0 20px 4px rgba(59, 130, 246, 0.8),
+              0 0 40px 10px rgba(59, 130, 246, 0.4);
+  opacity: 0; transform: rotate(15deg); transform-origin: center;
+  animation: scannerAnim 1.8s cubic-bezier(0.75, 0, 0.25, 1) 0.3s forwards;
+  z-index: 5;
+}
+
+@keyframes scannerAnim {
+  0% { left: -5%; opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { left: 105%; opacity: 0; }
+}
+
+/* Brand Text Wipes In Tandem with Logo Scan */
+.loader-brand {
+  margin-top: 25px; color: #1f3c88; font-size: 1.35rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+  -webkit-mask-image: linear-gradient(to right, black 50%, transparent 50%);
+  -webkit-mask-size: 200% 100%;
+  -webkit-mask-position: 100% 0;
+  mask-image: linear-gradient(to right, black 50%, transparent 50%);
+  mask-size: 200% 100%;
+  mask-position: 100% 0;
+  animation: textMaskWipe 1.8s cubic-bezier(0.75, 0, 0.25, 1) 0.3s forwards;
+}
+@keyframes textMaskWipe {
+  0%   { -webkit-mask-position: 100% 0; mask-position: 100% 0; }
+  100% { -webkit-mask-position: 0 0; mask-position: 0 0; }
+}
+
+@keyframes fadeUpBrand {
+  0% { opacity: 0; transform: translateY(15px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+
+.loader-dots {
+  display: flex; gap: 7px; margin-top: 8px; opacity: 0;
+  animation: fadeUpBrand 0.8s ease 1.9s forwards;
+}
+.loader-dots span { width: 7px; height: 7px; border-radius: 50%; background: #e67e22; animation: ldBounce 1.2s ease-in-out infinite; }
+.loader-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loader-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes ldBounce { 0%,80%,100% { transform: scale(0.6); opacity: 0.35; } 40% { transform: scale(1.1); opacity: 1; } }

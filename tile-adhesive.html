@@ -1,493 +1,295 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Amsam Agency</title>
-    <link rel="icon" type="image/png" href="Images/Amsam_favicon_192.png" />
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com/" />
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-
-  <body>
-    <!-- HEADER -->
-    <header class="main-header">
-      <!-- LOGO → HOME -->
-      <a href="index.html" class="logo-link">
-        <div class="logo-area">
-          <img
-            src="Images/Amsam_logo_transparent.png"
-            alt="Amsam Agency Logo"
-            class="agency-logo"
-          />
-          <span class="agency-name">Amsam Agency</span>
-        </div>
-      </a>
-
-      <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-
-      <nav id="nav">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li class="nav-dropdown">
-            <a href="index.html#product-list"
-              >Products
-              <span
-                class="nav-arrow"
-                style="
-                  padding: 10px;
-                  margin: -10px 0 -10px 4px;
-                  pointer-events: auto;
-                "
-                >▼</span
-              ></a
-            >
-            <ul class="dropdown-menu">
-              <li><a href="cements.html">Cements</a></li>
-              <li><a href="tile-adhesive.html">Tile Adhesive</a></li>
-            </ul>
-          </li>
-          <li><a href="index.html#enquire">Enquire</a></li>
-          <li><a href="index.html#about">About Us</a></li>
-          <li><a href="index.html#contact">Contact</a></li>
-        </ul>
-      </nav>
-    </header>
-
-    <!-- TILE ADHESIVE CATALOG -->
-    <section
-      id="products"
-      class="content-section"
-      style="padding-top: 150px; min-height: 80vh"
-    >
-      <div class="animate-on-scroll" style="margin-bottom: 5px;">
-        <h2 style="font-size: clamp(32px, 5vw, 42px); color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.5); margin-bottom: 5px;">
-          Tile Adhesive Catalog
-        </h2>
-        <p style="color: #d1e0ef; font-size: 1.1rem; margin-bottom: 0;">Browse our trusted tile adhesive products and pricing.</p>
-        <p class="scroll-hint">Scroll to view more products ↓</p>
-      </div>
-
-      <div
-        class="products-grid"
-        id="tileAdhesiveGrid"
-        style="margin-top: 15px !important"
-      >
-        <!-- Content populated by JS -->
-        <div class="loading-spinner">Loading products...</div>
-      </div>
-    </section>
-
-    <!--  
-<section id="enquire" class="enquire-section">
-    <h2>Enquire</h2>
-    <p class="helper-text">Choose your preferred way to contact us</p>
-
-    <div class="enquire-grid">
-
-        
-        <div class="enquire-box">
-            <h3>Enquire via WhatsApp</h3>
-
-            <form id="whatsappForm">
-                <input type="text" id="name" placeholder="Your Name" required>
-                <input type="text" id="address" placeholder="Delivery Address" required>
-                <div class="date-wrapper">
-                    <span class="date-placeholder">Delivery Date</span>
-                    <input type="date" id="date" required>
-                </div>
-
-
-
-                <select id="brand" required>
-                    <option value="">Select Brand</option>
-                    <option>Chettinad</option>
-                    <option>ACC</option>
-                    <option>UltraTech</option>
-                    <option>Ramco</option>
-                    <option>Dalmia</option>
-                </select>
-
-                <input type="text" id="type" placeholder="Cement Type (OPC / PPC)" required>
-                <input type="number" id="quantity" placeholder="Quantity (Bags)" required>
-                <!-- <input type="number" id="mobile" placeholder="Your Number" required> 
-                <button type="submit" class="btn whatsapp-btn">
-                    Send via WhatsApp
-                </button>
-            </form>
-        </div>
-
-        <!-- CALL BACK 
-        <div class="enquire-box">
-            <h3>Request a Call Back</h3>
-              
-            <form id="callbackForm">
-              <input type="text" id="cb-name" placeholder="Your Name" required>
-              <input type="tel" id="cb-phone" placeholder="Mobile Number" required>
-              <button type="submit" class="btn call-btn">Request Call Back</button>
-            </form>
-
-
-            <p class="small-text">
-                Or call us directly: <strong>+91 82486 44610</strong>
-            </p>
-        </div>
-
-    </div>
-</section>
--->
-
-    <section id="enquire" class="enquire-section">
-      <h2>Enquire</h2>
-      <p class="helper-text">Choose your preferred way to contact us</p>
-
-      <div class="enquire-grid">
-        <!-- WHATSAPP ENQUIRY -->
-        <div class="enquire-box animate-on-scroll delay-1">
-          <h3>Enquire via WhatsApp</h3>
-
-          <form id="whatsappForm">
-            <div class="form-row">
-              <label for="name">Name:</label>
-              <input type="text" id="name" required />
-            </div>
-
-            <div class="form-row">
-              <label for="address">Delivery Location:</label>
-              <input type="text" id="address" required />
-            </div>
-
-            <div class="form-row">
-              <label for="date">Delivery Date:</label>
-              <input type="date" id="date" required />
-            </div>
-
-            <div class="form-row">
-              <label for="brand">Brand:</label>
-              <select id="brand" required>
-                <option value="">Select Brand</option>
-                <option>Chettinad</option>
-                <option>ACC</option>
-                <option>UltraTech</option>
-                <option>Ramco</option>
-                <option>Dalmia</option>
-              </select>
-            </div>
-
-            <div class="form-row">
-              <label for="type">Cement Type:</label>
-              <input
-                type="text"
-                id="type"
-                placeholder="Eg: OPC / PPC / Composite cement"
-                required
-              />
-            </div>
-
-            <div class="form-row">
-              <label for="quantity">Quantity:</label>
-              <input type="number" id="quantity" placeholder="Bags" required />
-            </div>
-
-            <button type="submit" class="btn whatsapp-btn">
-              Enquire via WhatsApp
-            </button>
-          </form>
-        </div>
-
-        <!-- CALL BACK -->
-        <div class="enquire-box animate-on-scroll delay-2">
-          <h3>Request a Call Back</h3>
-
-          <form id="callbackForm">
-            <div class="form-row">
-              <label for="cb-name">Name:</label>
-              <input type="text" id="cb-name" required />
-            </div>
-
-            <div class="form-row">
-              <label for="cb-phone">Mobile:</label>
-              <input type="tel" id="cb-phone" required />
-            </div>
-
-            <div class="form-row">
-              <label for="cb-location">Delivery Location:</label>
-              <input type="text" id="cb-location" required />
-            </div>
-
-            <button type="submit" class="btn call-btn">
-              Request a Call Back
-            </button>
-          </form>
-
-          <p class="small-text">
-            Or call us directly: <strong>+91 82486 44610</strong>
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section id="about" class="about">
-      <div class="about-block animate-on-scroll">
-        <h3>About Us</h3>
-        <p>
-          Amsam Agency is a trusted Tamil Nadu–based wholesale supplier of
-          premium cement brands, serving residential, commercial, and
-          infrastructure projects across the state. With strong industry
-          experience and deep regional market knowledge, we deliver quality,
-          authenticity, and dependable service.
-        </p>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="divider"></div>
-
-      <div class="why-block animate-on-scroll delay-1">
-        <h3>Why Amsam Agency?</h3>
-        <ul>
-          <li>Trusted wholesale cement partner</li>
-          <li>Tamil Nadu–wide supply network</li>
-          <li>Premium & authentic cement brands</li>
-          <li>Timely and reliable delivery</li>
-          <li>Transparent pricing and service</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- SUPPLY NETWORK -->
-
-    <!-- CONTACT -->
-    <section id="contact" class="contact-section">
-      <h2 class="contact-title">Contact Us</h2>
-
-      <div class="contact-grid">
-        <div class="contact-box animate-on-scroll">
-          <p class="name">Mr. Gnanavel Kumar</p>
-          <p class="role">Founder & Proprietor</p>
-          <a href="tel:+919488046503">+91 9842775578</a>
-        </div>
-
-        <div class="contact-box animate-on-scroll delay-1">
-          <p class="name">Mr. Janaa Krishnan</p>
-          <p class="role">Proprietor</p>
-          <a href="tel:+918248644610">+91 8248644610</a>
-        </div>
-
-        <div class="contact-box animate-on-scroll delay-2">
-          <p class="name">Customer Support</p>
-          <a href="tel:+919788188611">+91 9788188611</a>
-          <a href="tel:+919488046503">+91 9488046503</a>
-        </div>
-      </div>
-
-      <!-- CONNECT & SOCIAL (Dark Footer Style) -->
-      <div class="footer-layout animate-on-scroll">
-        <div class="footer-col left-col">
-          <h4 class="footer-heading">VISIT US</h4>
-
-          <!-- Medium Map Box -->
-          <div
-            class="footer-map-wrapper"
-            style="
-              margin-bottom: 20px;
-              border-radius: 8px;
-              overflow: hidden;
-              border: 1px solid #1f3c88;
-            "
-          >
-            <iframe
-              src="https://maps.google.com/maps?q=11.3507635,77.1679423&z=15&output=embed"
-              width="100%"
-              height="200"
-              style="border: 0"
-              allowfullscreen=""
-              loading="lazy"
-            >
-            </iframe>
-          </div>
-
-          <p class="footer-address">
-            <strong>Amsam Agency</strong><br />
-            Punjai Puliyampatti, Tamil Nadu
-          </p>
-          <a
-            href="https://maps.google.com/maps?q=11.3507635,77.1679423&z=15&output=embed"
-            target="_blank"
-            class="footer-link"
-          >
-            Get Directions ↗
-          </a>
-        </div>
-
-        <div class="footer-col right-col">
-          <h4 class="footer-heading">SOCIAL LINKS & CONTACT</h4>
-
-          <div class="social-icons-row">
-            <!-- Instagram -->
-            <a
-              href="https://instagram.com/amsam_agency"
-              target="_blank"
-              class="social-icon-btn instagram"
-              aria-label="Instagram"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                fill="currentColor"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"
-                />
-              </svg>
-            </a>
-
-            <!-- Email -->
-            <a
-              href="mailto:jvtraders961@gmail.com"
-              class="social-icon-btn email"
-              aria-label="Email"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                fill="currentColor"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"
-                />
-              </svg>
-            </a>
-
-            <!-- Phone -->
-            <a
-              href="tel:+918248644610"
-              class="social-icon-btn phone"
-              aria-label="Phone"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                fill="currentColor"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"
-                />
-              </svg>
-            </a>
-
-            <!-- WhatsApp -->
-            <a
-              href="https://wa.me/918248644610"
-              target="_blank"
-              class="social-icon-btn whatsapp"
-              aria-label="WhatsApp"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                fill="currentColor"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FLOATING WHATSAPP BUTTON -->
-    <a
-      href="https://wa.me/918248644610?text=Hello%20Amsam%20Agency,%20I%20have%20an%20enquiry."
-      class="float-whatsapp"
-      target="_blank"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="30"
-        height="30"
-        fill="currentColor"
-        viewBox="0 0 16 16"
-      >
-        <path
-          d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"
-        />
-      </svg>
-    </a>
-
-    <!-- SPLIT VIEW OVERLAY & UNIFIED MODAL -->
-    <div class="split-overlay" id="splitOverlay" onclick="closeSplitView()"></div>
-    <div id="morphedBoxContainer" class="morphed-box" style="visibility: hidden; opacity: 0; pointer-events: none;">
-        <!-- Dynamically injected by openSplitView -->
-    </div>
-
-    <footer>© 2026 Amsam Agency. All rights reserved.</footer>
-    <!-- PRODUCT DETAIL MODAL -->
-    <div id="productModal" class="product-modal">
-      <div class="modal-content">
-        <span class="close-modal">&times;</span>
-
-        <div class="modal-header">
-          <img
-            src=""
-            alt="Brand Logo"
-            id="modalLogo"
-            class="modal-brand-logo"
-          />
-          <h2 id="modalTitle">Brand Name</h2>
-          <p id="modalDesc">Brand description goes here.</p>
-        </div>
-
-        <div class="modal-body">
-          <h3>Current Prices</h3>
-          <div class="price-table-container">
-            <table class="price-table">
-              <thead>
-                <tr>
-                  <th>Type</th>
-                  <th>Price (per bag)</th>
-                  <th>Order</th>
-                </tr>
-              </thead>
-              <tbody id="priceTableBody">
-                <!-- Populated by JS -->
-              </tbody>
-            </table>
-          </div>
-
-          <div class="modal-actions">
-            <p class="bulk-text">
-              Need bulk quantity? Contact us for special rates.
-            </p>
-            <button class="btn whatsapp-btn" id="modalEnquireBtn">
-              Enquire General
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script src="script.js"></script>
-  </body>
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Amsam Agency</title>
+    <link rel="icon" type="image/png" href="Images/Amsam_favicon_192.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com/" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+
+    
+    <!-- HEADER -->
+    <header class="main-header">
+      <!-- LOGO → HOME -->
+      <a href="index.html" class="logo-link">
+        <div class="logo-area">
+          <img
+            src="Images/Amsam_logo_transparent.png"
+            alt="Amsam Agency Logo"
+            class="agency-logo"
+          />
+          <span class="agency-name">Amsam Agency</span>
+        </div>
+      </a>
+
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <nav id="nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li class="nav-dropdown">
+            <a href="index.html#product-list"
+              >Products
+              <span
+                class="nav-arrow"
+                style="
+                  padding: 10px;
+                  margin: -10px 0 -10px 4px;
+                  pointer-events: auto;
+                "
+                >▼</span
+              ></a
+            >
+            <ul class="dropdown-menu">
+              <li><a href="cements.html">Cements</a></li>
+              <li><a href="tile-adhesive.html">Tile Adhesive</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html#enquire">Enquire</a></li>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- TILE ADHESIVE CATALOG -->
+    <section
+      id="products"
+      class="content-section"
+      style="padding-top: 150px; min-height: 80vh"
+    >
+      <div class="animate-on-scroll" style="margin-bottom: 5px;">
+        <h2 style="font-size: clamp(32px, 5vw, 42px); color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.5); margin-bottom: 5px;">
+          Tile Adhesive Catalog
+        </h2>
+        <p style="color: #d1e0ef; font-size: 1.1rem; margin-bottom: 0;">Browse our trusted tile adhesive products and pricing.</p>
+        <p class="scroll-hint">Scroll to view more products â†“</p>
+      </div>
+
+      <div
+        class="products-grid"
+        id="tileAdhesiveGrid"
+        style="margin-top: 15px !important"
+      >
+        <!-- Content populated by JS -->
+        <div class="loading-spinner">Loading products...</div>
+      </div>
+    </section>
+
+    <!--  
+<section id="enquire" class="enquire-section">
+    <h2>Enquire</h2>
+    <p class="helper-text">Choose your preferred way to contact us</p>
+
+    <div class="enquire-grid">
+
+        
+        <div class="enquire-box">
+            <h3>Enquire via WhatsApp</h3>
+
+            <form id="whatsappForm">
+                <input type="text" id="name" placeholder="Your Name" required>
+                <input type="text" id="address" placeholder="Delivery Address" required>
+                <div class="date-wrapper">
+                    <span class="date-placeholder">Delivery Date</span>
+                    <input type="date" id="date" required>
+                </div>
+
+
+
+                <select id="brand" required>
+                    <option value="">Select Brand</option>
+                    <option>Chettinad</option>
+                    <option>ACC</option>
+                    <option>UltraTech</option>
+                    <option>Ramco</option>
+                    <option>Dalmia</option>
+                </select>
+
+                <input type="text" id="type" placeholder="Cement Type (OPC / PPC)" required>
+                <input type="number" id="quantity" placeholder="Quantity (Bags)" required>
+                <!-- <input type="number" id="mobile" placeholder="Your Number" required> 
+                <button type="submit" class="btn whatsapp-btn">
+                    Send via WhatsApp
+                </button>
+            </form>
+        </div>
+
+        <!-- CALL BACK 
+        <div class="enquire-box">
+            <h3>Request a Call Back</h3>
+              
+            <form id="callbackForm">
+              <input type="text" id="cb-name" placeholder="Your Name" required>
+              <input type="tel" id="cb-phone" placeholder="Mobile Number" required>
+              <button type="submit" class="btn call-btn">Request Call Back</button>
+            </form>
+
+
+            <p class="small-text">
+                Or call us directly: <strong>+91 82486 44610</strong>
+            </p>
+        </div>
+
+    </div>
+</section>
+-->
+
+    <section id="enquire" class="enquire-section">
+      <h2>Enquire</h2>
+      <p class="helper-text">Choose your preferred way to contact us</p>
+
+      <div class="enquire-grid">
+        <!-- WHATSAPP ENQUIRY -->
+        <div class="enquire-box animate-on-scroll delay-1">
+          <h3>Enquire via WhatsApp</h3>
+
+          <form id="whatsappForm">
+            <div class="form-row">
+              <label for="name">Name:</label>
+              <input type="text" id="name" required />
+            </div>
+
+            <div class="form-row">
+              <label for="address">Delivery Location:</label>
+              <input type="text" id="address" required />
+            </div>
+
+            <div class="form-row">
+              <label for="date">Delivery Date:</label>
+              <input type="date" id="date" required />
+            </div>
+
+            <div class="form-row">
+              <label for="brand">Brand:</label>
+              <select id="brand" required>
+                <option value="">Select Brand</option>
+                <option>Chettinad</option>
+                <option>ACC</option>
+                <option>UltraTech</option>
+                <option>Ramco</option>
+                <option>Dalmia</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label for="type">Cement Type:</label>
+              <input
+                type="text"
+                id="type"
+                placeholder="Eg: OPC / PPC / Composite cement"
+                required
+              />
+            </div>
+
+            <div class="form-row">
+              <label for="quantity">Quantity:</label>
+              <input type="number" id="quantity" placeholder="Bags" required />
+            </div>
+
+            <button type="submit" class="btn whatsapp-btn">
+              Enquire via WhatsApp
+            </button>
+          </form>
+        </div>
+
+        <!-- CALL BACK -->
+        <div class="enquire-box animate-on-scroll delay-2">
+          <h3>Request a Call Back</h3>
+
+          <form id="callbackForm">
+            <div class="form-row">
+              <label for="cb-name">Name:</label>
+              <input type="text" id="cb-name" required />
+            </div>
+
+            <div class="form-row">
+              <label for="cb-phone">Mobile:</label>
+              <input type="tel" id="cb-phone" required />
+            </div>
+
+            <div class="form-row">
+              <label for="cb-location">Delivery Location:</label>
+              <input type="text" id="cb-location" required />
+            </div>
+
+            <button type="submit" class="btn call-btn">
+              Request a Call Back
+            </button>
+          </form>
+
+          <p class="small-text">
+            Or call us directly: <strong>+91 82486 44610</strong>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- BACK TO HOME -->
+    <section style="background: #060f1e; padding: 50px 20px; text-align: center;">
+      <p style="color: rgba(255,255,255,0.55); font-size: 0.9rem; margin-bottom: 20px;">For About Us, Contact &amp; more</p>
+      <a href="index.html" style="
+          display: inline-flex; align-items: center; gap: 10px;
+          background: linear-gradient(135deg, #1f3c88, #2a52b8);
+          color: #fff; text-decoration: none;
+          padding: 14px 32px; border-radius: 50px;
+          font-size: 1rem; font-weight: 600; letter-spacing: 0.5px;
+          box-shadow: 0 4px 20px rgba(31,60,136,0.4);
+          transition: transform 0.2s, box-shadow 0.2s;
+      " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(31,60,136,0.55)';"
+         onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 20px rgba(31,60,136,0.4)';">
+        ← Back to Home
+      </a>
+    </section>
+
+    <footer>© 2026 Amsam Agency. All rights reserved.</footer>
+
+    <!-- PRODUCT DETAIL MODAL -->
+    <div id="productModal" class="product-modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-header">
+          <img src="" alt="Brand Logo" id="modalLogo" class="modal-brand-logo" />
+          <h2 id="modalTitle">Brand Name</h2>
+          <p id="modalDesc">Brand description goes here.</p>
+        </div>
+        <div class="modal-body">
+          <h3>Current Prices</h3>
+          <div class="price-table-container">
+            <table class="price-table">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Price (per bag)</th>
+                  <th>Order</th>
+                </tr>
+              </thead>
+              <tbody id="priceTableBody">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-actions">
+            <p class="bulk-text">Need bulk quantity? Contact us for special rates.</p>
+            <button class="btn whatsapp-btn" id="modalEnquireBtn">Enquire General</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
 </html>

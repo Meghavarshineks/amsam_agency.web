@@ -40,8 +40,8 @@ const brandsStaticData = {
 };
 
 const tileAdhesiveStaticData = {
-  "Ramco Hard Worker Tile Fix": {
-    logo: "Images/hardworker_logo.jpeg",
+  "Hardworker": {
+    logo: "Images/Hardworker_logo.jpeg",
     desc: "Ramco Hard Worker Tile Fix offers high-strength adhesion for various tiling needs.",
   },
 };

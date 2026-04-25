@@ -640,19 +640,6 @@ if (callbackForm) {
           `Thank you, ${name}! Your request has been sent. We will call you at ${phone} shortly.`,
         );
         callbackForm.reset();
-
-        // ── Notify owner via WhatsApp ──
-        const ownerNumber = "918248644610";
-        const ownerMsg =
-          `📞 *New Call Back Request*\n\n` +
-          `👤 Name: ${name}\n` +
-          `📱 Mobile: ${phone}\n` +
-          `📍 Location: ${location}\n\n` +
-          `Please call them back as soon as possible.`;
-        window.open(
-          `https://wa.me/${ownerNumber}?text=${encodeURIComponent(ownerMsg)}`,
-          "_blank"
-        );
       })
       .catch((error) => {
         console.error("Error!", error.message);

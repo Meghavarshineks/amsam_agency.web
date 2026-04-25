@@ -18,7 +18,7 @@ const brandsStaticData = {
     desc: "UltraTech Cement is the largest manufacturer of grey cement and ready mix concrete in India.",
   },
   Ramco: {
-    logo: "Images/Ramco_logo.png", // Check if png/jpg matches your folder
+    logo: "Images/Ramco_logo.png",
     desc: "Ramco Cements is known for its strong dealer network and high-durability products.",
   },
   Dalmia: {
@@ -39,20 +39,7 @@ const tileAdhesiveStaticData = {
 };
 
 // Fallback Data (Used if Google Sheet fails or during setup)
-const fallbackPrices = [
-  { Brand: "Chettinad", Type: "PPC", Price: "390" },
-  { Brand: "Chettinad", Type: "OPC", Price: "410" },
-  { Brand: "ACC", Type: "Suraksha Power", Price: "385" },
-  { Brand: "ACC", Type: "Concrete +", Price: "405" },
-  { Brand: "UltraTech", Type: "PPC", Price: "400" },
-  { Brand: "Ramco", Type: "Supergrade", Price: "395" },
-  { Brand: "Dalmia", Type: "DSP", Price: "415" },
-  { Brand: "Maha", Type: "PPC", Price: "380" },
-];
-
-const tileAdhesiveFallbackPrices = [
-  { Brand: "Ramco Hard Worker Tile Fix", Type: "Standard", Price: "450" },
-];
+// No fallback prices — all data comes from the Google Sheet only.
 
 // ================= MAIN INITIALIZATION =================
 // Run immediately if the script is at the end of the body
@@ -87,10 +74,22 @@ async function fetchPrices() {
     renderGrid(priceData);
     renderTileGrid(priceData);
   } catch (error) {
-    console.warn("Using fallback data. Reason:", error);
-    // If fetch fails (or CORS issue, or bad data), use fallback
-    renderGrid(fallbackPrices);
-    renderTileGrid(tileAdhesiveFallbackPrices);
+    console.error("Could not load prices from sheet. Reason:", error);
+    // Show a friendly message in the grid instead of fallback prices
+    const grid = document.getElementById("productsGrid");
+    if (grid) {
+      grid.innerHTML = `
+        <div style="color:#fff; text-align:center; padding:40px; font-size:1.1rem;">
+          <p style="font-size:2rem; margin-bottom:10px;">⚠️</p>
+          <p><strong>Prices could not be loaded right now.</strong></p>
+          <p style="margin-top:8px; color:#9ecbff;">Please contact us directly for current prices.</p>
+          <a href="https://wa.me/918248644610" target="_blank" style="display:inline-block; margin-top:20px; background:#25d366; color:#fff; padding:12px 28px; border-radius:50px; text-decoration:none; font-weight:600;">📲 WhatsApp Us</a>
+        </div>`;
+    }
+    const tileGrid = document.getElementById("tileAdhesiveGrid");
+    if (tileGrid) {
+      tileGrid.innerHTML = `<div style="color:#fff; text-align:center; padding:40px; font-size:1.1rem;"><p>Prices could not be loaded. Please contact us.</p></div>`;
+    }
   }
 }
 
@@ -129,56 +128,48 @@ function renderGrid(priceList) {
 
   grid.innerHTML = ""; // Clear loading text
 
-  // Group prices by Brand
+  // Group prices by Brand — order comes from the sheet
   const brandGroups = {};
+  const brandOrder = []; // preserve sheet order
 
   priceList.forEach((item) => {
-    // Case-insensitive brand matching if needed, but assuming exact match for now
-    // Clean up brand name just in case
     const brandName = item.Brand ? item.Brand.trim() : "Unknown";
-
     if (!brandGroups[brandName]) {
       brandGroups[brandName] = [];
+      brandOrder.push(brandName); // first time seen
     }
     brandGroups[brandName].push(item);
   });
 
-  // Create a Card for each Brand defined in Static Data
-  // (This ensures we only show brands we have logos for)
-  Object.keys(brandsStaticData).forEach((brandName) => {
-    const staticInfo = brandsStaticData[brandName];
+  // Render a card for every brand found in the sheet.
+  // Use brandsStaticData for logo/desc if available; fall back gracefully.
+  brandOrder.forEach((brandName) => {
+    const staticInfo = brandsStaticData[brandName] || {
+      logo: "Images/Amsam_logo_transparent.png", // generic fallback
+      desc: `${brandName} cement products available at Amsam Agency.`,
+    };
 
     const card = document.createElement("a");
     card.className = "counter-box globe-item";
-
     card.href = "javascript:void(0)";
 
-    // Click the card itself to expand/collapse
-    card.onclick = function(e) {
-      // Don't collapse if clicking an order button inside
+    card.onclick = function (e) {
       if (e.target.closest('.type-order-btn')) return;
       toggleCard(this);
     };
-    
-    // Pre-generate the types carousel
-    const products = brandGroups[brandName] || [];
+
+    const products = brandGroups[brandName];
     let typesHtml = `<div class="types-carousel">`;
-    
-    const listToRender = products.length > 0 ? products : [
-        { Type: 'OPC 43 Grade', Price: 'Call' },
-        { Type: 'OPC 53 Grade', Price: 'Call' },
-        { Type: 'PPC Blended', Price: 'Call' }
-    ];
 
-    // Image mapping: use brand-specific type images if available, else fall back to brand logo
-    // To add real images: put them in Images/ folder as BrandName_Type.jpg (e.g. Chettinad_PPC.jpg)
-    listToRender.forEach(prod => {
-        const typeSlug = (prod.Type || 'Standard').replace(/\s+/g, '_');
-        const typeImg = `Images/${brandName}_${typeSlug}.jpg`;
-        // Fallback to brand logo if specific type image doesn't exist
-        const fallbackImg = staticInfo.logo;
+    products.forEach(prod => {
+      const typeSlug = (prod.Type || 'Standard').replace(/\s+/g, '_');
+      const typeImg = `Images/${brandName}_${typeSlug}.jpg`;
+      const fallbackImg = staticInfo.logo;
 
-        typesHtml += `
+      const priceDisplay = (prod.Price && prod.Price.trim()) ? `₹${prod.Price.trim()}` : `Contact us`;
+      const priceForOrder = (prod.Price && prod.Price.trim()) ? prod.Price.trim() : 'Not mentioned';
+
+      typesHtml += `
             <div class="type-card">
                 <div class="type-card-name">${prod.Type || 'Standard'}</div>
                 <div class="type-card-img-wrap">
@@ -186,8 +177,8 @@ function renderGrid(priceList) {
                          class="type-card-img" 
                          onerror="this.src='${fallbackImg}'">
                 </div>
-                <div class="type-card-price">₹${prod.Price || 'Call'}</div>
-                <button class="type-order-btn" onclick="orderSpecific('${brandName}', '${prod.Type || 'Standard'}', '${prod.Price || 'Call'}'); event.stopPropagation();">Order Now</button>
+                <div class="type-card-price">${priceDisplay}</div>
+                <button class="type-order-btn" onclick="orderSpecific('${brandName}', '${prod.Type || 'Standard'}', '${priceForOrder}'); event.stopPropagation();">Order Now</button>
             </div>
         `;
     });
@@ -219,33 +210,45 @@ function initGlobe() {
   const globeItems = document.querySelectorAll(".globe-container .globe-item");
   if (!globeItems.length) return;
 
+  const HEADER_H = 70; // Fixed header height in px
+
   function updateGlobe() {
     if (document.body.classList.contains("split-active")) return;
-    const centerY = window.innerHeight / 2;
+
+    // Visual centre = midpoint of the area below the header
+    const visibleH = window.innerHeight - HEADER_H;
+    const centerY = HEADER_H + visibleH / 2;
+
+    // Spread zone: 40% of the visible height on each side feels natural
+    const spread = visibleH * 0.42;
 
     globeItems.forEach((item) => {
       const rect = item.getBoundingClientRect();
-      // Center of the item relative to viewport
       const itemCenterY = rect.top + rect.height / 2;
-      // Distance from center of viewport
       const dist = itemCenterY - centerY;
 
-      // Map distance to rotation and scale
-      let ratio = dist / 350;
+      // Clamp ratio to [-1, 1]
+      let ratio = dist / spread;
       if (ratio > 1) ratio = 1;
       if (ratio < -1) ratio = -1;
 
-      const angle = ratio * -50; // Tilt background cards away (up to 50 deg)
-      const scale = 1 - Math.abs(ratio) * 0.25; // Scale drops from 1 to 0.75
-      const opacity = 1 - Math.abs(ratio) * 0.6; // Opacity drops from 1 to 0.4
+      const absRatio = Math.abs(ratio);
 
-      // Apply 3D transform
+      const angle = ratio * -55;           // max ±55° tilt
+      const scale = 1 - absRatio * 0.22;   // 1.0 → 0.78 at edges
+      const opacity = 1 - absRatio * 0.65;   // 1.0 → 0.35 at edges
+
       item.style.transform = `rotateX(${angle}deg) scale(${scale})`;
-      item.style.opacity = opacity;
+      item.style.opacity = Math.max(opacity, 0.1); // never fully invisible
     });
   }
 
   window.addEventListener("scroll", () => {
+    requestAnimationFrame(updateGlobe);
+  });
+
+  // Also re-run on resize so spread stays correct
+  window.addEventListener("resize", () => {
     requestAnimationFrame(updateGlobe);
   });
 
@@ -279,20 +282,20 @@ function renderTileGrid(priceList) {
 
     card.href = "javascript:void(0)";
 
-    card.onclick = function(e) {
+    card.onclick = function (e) {
       if (e.target.closest('.type-order-btn')) return;
       toggleCard(this);
     };
 
     const products = brandGroups[brandName] || tileAdhesiveFallbackPrices.filter((p) => p.Brand === brandName);
     let typesHtml = `<div class="types-carousel">`;
-    
-    products.forEach(prod => {
-        const typeSlug = (prod.Type || 'Standard').replace(/\s+/g, '_');
-        const typeImg = `Images/${brandName}_${typeSlug}.jpg`;
-        const fallbackImg = staticInfo.logo;
 
-        typesHtml += `
+    products.forEach(prod => {
+      const typeSlug = (prod.Type || 'Standard').replace(/\s+/g, '_');
+      const typeImg = `Images/${brandName}_${typeSlug}.jpg`;
+      const fallbackImg = staticInfo.logo;
+
+      typesHtml += `
             <div class="type-card">
                 <div class="type-card-name">${prod.Type || 'Standard'}</div>
                 <div class="type-card-img-wrap">
@@ -370,35 +373,35 @@ function openModal(brandName, staticInfo, products) {
 
 // ================= CARD EXPAND/COLLAPSE =================
 function toggleCard(card) {
-    // Close any other expanded card first and reset their icons
-    document.querySelectorAll('.counter-box.expanded, .globe-item.expanded').forEach(other => {
-        if (other !== card) {
-            other.classList.remove('expanded');
-            const otherIcon = other.querySelector('.expand-icon');
-            const otherText = other.querySelector('.expand-text');
-            if (otherIcon) otherIcon.textContent = '＋';
-            if (otherText) otherText.textContent = 'View Types';
-        }
-    });
-
-    card.classList.toggle('expanded');
-
-    // Swap icon and text
-    const icon = card.querySelector('.expand-icon');
-    const text = card.querySelector('.expand-text');
-    if (card.classList.contains('expanded')) {
-        if (icon) icon.textContent = '−';
-        if (text) text.textContent = 'Minimize';
-        setTimeout(() => {
-            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 100);
-    } else {
-        if (icon) icon.textContent = '＋';
-        if (text) text.textContent = 'View Types';
+  // Close any other expanded card first and reset their icons
+  document.querySelectorAll('.counter-box.expanded, .globe-item.expanded').forEach(other => {
+    if (other !== card) {
+      other.classList.remove('expanded');
+      const otherIcon = other.querySelector('.expand-icon');
+      const otherText = other.querySelector('.expand-text');
+      if (otherIcon) otherIcon.textContent = '＋';
+      if (otherText) otherText.textContent = 'View Types';
     }
+  });
 
-    // Recalculate globe positions
-    window.dispatchEvent(new Event('scroll'));
+  card.classList.toggle('expanded');
+
+  // Swap icon and text
+  const icon = card.querySelector('.expand-icon');
+  const text = card.querySelector('.expand-text');
+  if (card.classList.contains('expanded')) {
+    if (icon) icon.textContent = '−';
+    if (text) text.textContent = 'Minimize';
+    setTimeout(() => {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
+  } else {
+    if (icon) icon.textContent = '＋';
+    if (text) text.textContent = 'View Types';
+  }
+
+  // Recalculate globe positions
+  window.dispatchEvent(new Event('scroll'));
 }
 
 // Close Modal Helper
@@ -457,7 +460,7 @@ function orderSpecific(brand, type, price) {
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", function (e) {
     if (e.target.classList.contains("nav-arrow")) {
-        return; // Let the dropdown toggle logic handle this
+      return; // Let the dropdown toggle logic handle this
     }
     e.preventDefault();
     const target = document.querySelector(this.getAttribute("href"));
@@ -507,11 +510,11 @@ if (hamburger && nav) {
         e.stopPropagation(); // stop smooth scroll logic from intercepting
         this.parentElement.classList.toggle("active");
       } else {
-         // It's a click on 'Products', let the browser navigate normally
-         if (window.innerWidth <= 768 && nav && hamburger) {
-             nav.classList.remove("active");
-             hamburger.classList.remove("active");
-         }
+        // It's a click on 'Products', let the browser navigate normally
+        if (window.innerWidth <= 768 && nav && hamburger) {
+          nav.classList.remove("active");
+          hamburger.classList.remove("active");
+        }
       }
     });
   });
@@ -543,9 +546,9 @@ const callbackForm = document.getElementById("callbackForm");
 if (callbackForm) {
   callbackForm.addEventListener("submit", function (e) {
     e.preventDefault();
-    const name = document.getElementById("cb-name").value;
-    const phone = document.getElementById("cb-phone").value;
-    const location = document.getElementById("cb-location").value;
+    const name = document.getElementById("cb-name").value.trim();
+    const phone = document.getElementById("cb-phone").value.trim();
+    const location = document.getElementById("cb-location").value.trim();
     const submitBtn = callbackForm.querySelector("button[type='submit']");
     const originalBtnText = submitBtn.innerText;
 
@@ -570,6 +573,19 @@ if (callbackForm) {
           `Thank you, ${name}! Your request has been sent. We will call you at ${phone} shortly.`,
         );
         callbackForm.reset();
+
+        // ── Notify owner via WhatsApp ──
+        const ownerNumber = "918248644610";
+        const ownerMsg =
+          `📞 *New Call Back Request*\n\n` +
+          `👤 Name: ${name}\n` +
+          `📱 Mobile: ${phone}\n` +
+          `📍 Location: ${location}\n\n` +
+          `Please call them back as soon as possible.`;
+        window.open(
+          `https://wa.me/${ownerNumber}?text=${encodeURIComponent(ownerMsg)}`,
+          "_blank"
+        );
       })
       .catch((error) => {
         console.error("Error!", error.message);

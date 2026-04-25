@@ -2038,17 +2038,17 @@ body.split-active .split-overlay {
 
 /* ---- INDIVIDUAL TYPE CARD ---- */
 .type-card {
-  flex: 0 0 160px;
-  min-width: 150px;
+  flex: 0 0 200px;
+  min-width: 180px;
   background: linear-gradient(145deg, #f8fbff, #eef3fa);
   border: 1px solid rgba(31, 60, 136, 0.1);
   border-radius: 14px;
-  padding: 16px 14px;
+  padding: 20px 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 10px;
+  gap: 12px;
   cursor: default;
   transition: all 0.3s ease;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
@@ -2071,14 +2071,14 @@ body.split-active .split-overlay {
 
 .type-card-img-wrap {
   width: 100%;
-  height: 100px;
+  height: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.8);
-  padding: 8px;
+  padding: 10px;
 }
 
 .type-card-img {
@@ -2147,13 +2147,13 @@ body.split-active .split-overlay {
   }
 
   .type-card {
-    flex: 0 0 140px;
-    min-width: 130px;
-    padding: 12px 10px;
+    flex: 0 0 160px;
+    min-width: 150px;
+    padding: 15px 12px;
   }
 
   .type-card-img-wrap {
-    height: 80px;
+    height: 110px;
   }
 }
 

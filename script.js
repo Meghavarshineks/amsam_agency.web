@@ -802,6 +802,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const calcClose = document.querySelector('.calc-close');
   const workTypeSelect = document.getElementById('workType');
   const areaInput = document.getElementById('areaInput');
+  const calcLength = document.getElementById('calcLength');
+  const calcHeight = document.getElementById('calcHeight');
   const calcResult = document.getElementById('calcResult');
 
   // Safety check, wait maybe the modal isn't injected yet on some pages
@@ -817,7 +819,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function calculateBags() {
-    const area = parseFloat(areaInput.value) || 0;
+    let area = 0;
+    if (calcLength && calcHeight) {
+      area = (parseFloat(calcLength.value) || 0) * (parseFloat(calcHeight.value) || 0);
+    } else if (areaInput) {
+      area = parseFloat(areaInput.value) || 0;
+    }
+    
     const ratio = parseFloat(workTypeSelect.value) || 0;
     const bags = Math.ceil(area * ratio);
     calcResult.innerText = bags + " Bags";
@@ -844,8 +852,16 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Calculation listeners
-  if (workTypeSelect && areaInput) {
+  if (workTypeSelect) {
     workTypeSelect.addEventListener('change', calculateBags);
+  }
+  if (calcLength) {
+    calcLength.addEventListener('input', calculateBags);
+  }
+  if (calcHeight) {
+    calcHeight.addEventListener('input', calculateBags);
+  }
+  if (areaInput) {
     areaInput.addEventListener('input', calculateBags);
   }
 });

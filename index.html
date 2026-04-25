@@ -521,10 +521,17 @@
             <option value="0.08">Plastering (12mm thickness)</option>
           </select>
         </div>
-        <div class="calc-form-group">
-          <label for="areaInput">Total Area (Sq.Ft):</label>
-          <input type="number" id="areaInput" placeholder="e.g. 1000" min="0">
+        <div class="calc-form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+          <div>
+            <label for="calcLength">Length (Feet):</label>
+            <input type="number" id="calcLength" placeholder="e.g. 50" min="0">
+          </div>
+          <div>
+            <label for="calcHeight">Height (Feet):</label>
+            <input type="number" id="calcHeight" value="10" min="0">
+          </div>
         </div>
+        <input type="hidden" id="areaInput">
         <div class="calc-result-box">
           <p>Estimated Required:</p>
           <div class="calc-result-number" id="calcResult">0 Bags</div>

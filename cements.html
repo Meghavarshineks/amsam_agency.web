@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -45,7 +45,8 @@
                     </ul>
                 </li>
                 <li><a href="index.html#enquire">Enquire</a></li>
-                <li><a href="index.html#about">About Us</a></li>
+                <li><a href="#" class="nav-calc-btn">Calculator</a></li>
+        <li><a href="index.html#about">About Us</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
             </ul>
         </nav>
@@ -149,44 +150,6 @@
                     </div>
 
                     <div class="form-row">
-                        <label for="date">Delivery Date:</label>
-                        <input type="date" id="date" required>
-                    </div>
-
-                    <div class="form-row">
-                        <label for="brand">Brand:</label>
-                        <select id="brand" required>
-                            <option value="">Select Brand</option>
-                            <option>Chettinad</option>
-                            <option>ACC</option>
-                            <option>UltraTech</option>
-                            <option>Ramco</option>
-                            <option>Dalmia</option>
-                        </select>
-                    </div>
-
-                    <div class="form-row">
-                        <label for="type">Cement Type:</label>
-                        <input type="text" id="type" placeholder="Eg: OPC / PPC / Composite cement" required>
-                    </div>
-
-                    <div class="form-row">
-                        <label for="quantity">Quantity:</label>
-                        <input type="number" id="quantity" placeholder="Bags" required>
-                    </div>
-
-                    <button type="submit" class="btn whatsapp-btn">
-                        Enquire via WhatsApp
-                    </button>
-                </form>
-            </div>
-
-            <!-- CALL BACK -->
-            <div class="enquire-box animate-on-scroll delay-2">
-                <h3>Request a Call Back</h3>
-
-                <form id="callbackForm">
-                    <div class="form-row">
                         <label for="cb-name">Name:</label>
                         <input type="text" id="cb-name" required>
                     </div>
@@ -281,6 +244,36 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+
+    <!-- Floating Calculator -->
+    <div id="floatCalc" class="float-calculator" title="Cement Calculator">
+      🧮
+    </div>
+
+    <!-- Calculator Modal -->
+    <div id="calcModal" class="calc-modal">
+      <div class="calc-modal-content">
+        <span class="calc-close">&times;</span>
+        <h3>Cement Calculator</h3>
+        <div class="calc-form-group">
+          <label for="workType">Type of Work:</label>
+          <select id="workType">
+            <option value="0.4">Concrete Slab / Roof (M20)</option>
+            <option value="0.12">Brickwork / Masonry (9" wall)</option>
+            <option value="0.08">Plastering (12mm thickness)</option>
+          </select>
+        </div>
+        <div class="calc-form-group">
+          <label for="areaInput">Total Area (Sq.Ft):</label>
+          <input type="number" id="areaInput" placeholder="e.g. 1000" min="0">
+        </div>
+        <div class="calc-result-box">
+          <p>Estimated Required:</p>
+          <div class="calc-result-number" id="calcResult">0 Bags</div>
+        </div>
+      </div>
+    </div>
+
+  </body>
 </html>

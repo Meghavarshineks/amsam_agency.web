@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -67,6 +67,7 @@
           </ul>
         </li>
         <li><a href="#enquire">Enquire</a></li>
+        <li><a href="#" class="nav-calc-btn">Calculator</a></li>
         <li><a href="#about">About Us</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -258,37 +259,39 @@
 
           <div class="form-row">
             <label for="date">Delivery Date:</label>
-            <input type="date" id="date" required />
-          </div>
-
-          <div class="form-row">
-            <label for="brand">Brand:</label>
-            <select id="brand" required>
-              <option value="">Select Brand</option>
-              <option>Chettinad</option>
-              <option>ACC</option>
-              <option>UltraTech</option>
-              <option>Ramco</option>
-              <option>Dalmia</option>
-            </select>
-          </div>
-
-          <div class="form-row">
-            <label for="type">Cement Type:</label>
-            <input type="text" id="type" placeholder="Eg: OPC / PPC / Composite cement" required />
-          </div>
-
-          <div class="form-row">
-            <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" placeholder="Bags" required />
-          </div>
-
-          <button type="submit" class="btn whatsapp-btn">
-            Enquire via WhatsApp
-          </button>
-        </form>
-      </div>
-
+            <input type="date" id="date" required />
+          </div>
+
+          <div class="form-row">
+            <label for="brand">Brand:</label>
+            <select id="brand" required>
+              <option value="">Select Brand</option>
+              <option>Chettinad</option>
+              <option>ACC</option>
+              <option>UltraTech</option>
+              <option>Ramco</option>
+              <option>Dalmia</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="type">Product Type:</label>
+            <select id="type" required disabled>
+              <option value="">Select Brand First</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" placeholder="Bags" required />
+          </div>
+
+          <button type="submit" class="btn whatsapp-btn">
+            Enquire via WhatsApp
+          </button>
+        </form>
+      </div>
+
       <!-- CALL BACK -->
       <div class="enquire-box animate-on-scroll delay-2">
         <h3>Request a Call Back</h3>
@@ -321,35 +324,39 @@
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section id="about" class="about">
-    <div class="about-block animate-on-scroll">
-      <h3>About Us</h3>
-      <p>
-        Amsam Agency is a trusted Tamil Nadu–based wholesale supplier of
-        premium cement brands, serving residential, commercial, and
-        infrastructure projects across the state. With strong industry
-        experience and deep regional market knowledge, we deliver quality,
-        authenticity, and dependable service.
-      </p>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="divider"></div>
-
-    <div class="why-block animate-on-scroll delay-1">
-      <h3>Why Amsam Agency?</h3>
-      <ul>
-        <li>Trusted wholesale cement partner</li>
-        <li>Tamil Nadu–wide supply network</li>
-        <li>Premium & authentic cement brands</li>
-        <li>Timely and reliable delivery</li>
-        <li>Transparent pricing and service</li>
-      </ul>
-    </div>
-  </section>
-
+  <!-- ABOUT -->
+  <section id="about" class="about">
+    <div class="about-block animate-on-scroll">
+      <h3>About Us</h3>
+      <p>
+        <strong>Amsam Agency</strong> is a trusted Tamil Nadu–based wholesale supplier of premium cement and high-performance tile adhesives.
+      </p>
+      <p style="margin-top: 15px;">
+        We serve residential, commercial, and infrastructure projects across the state, providing the essential materials needed for durable and aesthetic construction. With strong industry experience and deep regional market knowledge, we deliver quality, authenticity, and dependable service—ensuring every structure is built on a foundation of excellence.
+      </p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="why-block animate-on-scroll delay-1">
+      <h3>Why Choose Our Combined Solutions?</h3>
+      <ul style="list-style-type: none; padding: 0;">
+        <li style="margin-bottom: 12px; line-height: 1.5;">
+          <strong>🏢 Premium Cement Selection:</strong> Sourcing top-tier brands for superior structural integrity and load-bearing strength.
+        </li>
+        <li style="margin-bottom: 12px; line-height: 1.5;">
+          <strong>🛡️ Advanced Tile Adhesives:</strong> Offering specialized formulations for various tile types, ensuring excellent bonding, water resistance, and crack prevention.
+        </li>
+        <li style="margin-bottom: 12px; line-height: 1.5;">
+          <strong>🔄 Comprehensive Supply:</strong> A streamlined sourcing process for both masonry and finishing materials, reducing logistical overhead.
+        </li>
+        <li style="margin-bottom: 12px; line-height: 1.5;">
+          <strong>🤝 Expert Support:</strong> Technical guidance on selecting the right grade of cement and the appropriate adhesive class for your specific project needs.
+        </li>
+      </ul>
+    </div>
+  </section>
+
   <!-- SUPPLY NETWORK -->
 
   <!-- CONTACT -->
@@ -494,7 +501,37 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
-</body>
+  <script src="script.js"></script>
+
+    <!-- Floating Calculator -->
+    <div id="floatCalc" class="float-calculator" title="Cement Calculator">
+      🧮
+    </div>
+
+    <!-- Calculator Modal -->
+    <div id="calcModal" class="calc-modal">
+      <div class="calc-modal-content">
+        <span class="calc-close">&times;</span>
+        <h3>Cement Calculator</h3>
+        <div class="calc-form-group">
+          <label for="workType">Type of Work:</label>
+          <select id="workType">
+            <option value="0.4">Concrete Slab / Roof (M20)</option>
+            <option value="0.12">Brickwork / Masonry (9" wall)</option>
+            <option value="0.08">Plastering (12mm thickness)</option>
+          </select>
+        </div>
+        <div class="calc-form-group">
+          <label for="areaInput">Total Area (Sq.Ft):</label>
+          <input type="number" id="areaInput" placeholder="e.g. 1000" min="0">
+        </div>
+        <div class="calc-result-box">
+          <p>Estimated Required:</p>
+          <div class="calc-result-number" id="calcResult">0 Bags</div>
+        </div>
+      </div>
+    </div>
+
+  </body>
 
 </html>

@@ -95,6 +95,7 @@ async function fetchPrices() {
 
     renderGrid(priceData);
     renderTileGrid(priceData);
+    setupDynamicForms(priceData);
   } catch (error) {
     console.error("Could not load prices from sheet. Reason:", error);
     // Show a friendly message in the grid instead of fallback prices
@@ -142,6 +143,79 @@ function parseCSV(csvText) {
     result.push(obj);
   }
   return result;
+}
+
+// ================= FORM DYNAMIC POPULATION =================
+function setupDynamicForms(priceList) {
+  // Extract unique brands and their types from the sheet data
+  const brandTypes = {};
+  priceList.forEach(item => {
+    const brand = item.Brand ? item.Brand.trim() : "";
+    const type = item.Type ? item.Type.trim() : "";
+    if (!brand || !type) return;
+    if (!brandTypes[brand]) brandTypes[brand] = new Set();
+    brandTypes[brand].add(type);
+  });
+
+  // Since there might be multiple forms across different pages, queryall
+  const brandSelects = document.querySelectorAll("select#brand, select[id='brand']");
+  const typeInputs = document.querySelectorAll("input#type, select#type, [id='type']");
+  
+  if (brandSelects.length === 0 || typeInputs.length === 0) return;
+
+  // Convert any string input type fields into true selects (so it works on un-edited HTML pages too)
+  typeInputs.forEach(typeEl => {
+    const parent = typeEl.parentNode;
+    if (typeEl.tagName.toLowerCase() === "input" && parent) {
+      const select = document.createElement("select");
+      select.id = "type";
+      select.required = true;
+      select.disabled = true;
+      select.innerHTML = '<option value="">Select Brand First</option>';
+      parent.replaceChild(select, typeEl);
+      
+      const label = parent.querySelector('label[for="type"]');
+      if (label) label.textContent = "Product Type:";
+    }
+  });
+
+  // Re-query the type selects now that they are guaranteed to be selects
+  const typeSelects = document.querySelectorAll("select[id='type']");
+
+  brandSelects.forEach((brandSelect, index) => {
+    // Attempt to pair the brand dropdown with the nearest type dropdown in the same form
+    const form = brandSelect.closest("form");
+    const typeSelect = form ? form.querySelector("select[id='type']") : typeSelects[index];
+    
+    if (!typeSelect) return;
+
+    // Populate brand dropdown based exactly on sheet
+    brandSelect.innerHTML = '<option value="">Select Brand</option>';
+    Object.keys(brandTypes).sort().forEach(brand => {
+      const opt = document.createElement("option");
+      opt.value = brand;
+      opt.textContent = brand;
+      brandSelect.appendChild(opt);
+    });
+
+    // Handle change event
+    brandSelect.addEventListener("change", function () {
+      const chosenBrand = this.value;
+      typeSelect.innerHTML = '<option value="">Select Product Type</option>';
+      
+      if (brandTypes[chosenBrand]) {
+        Array.from(brandTypes[chosenBrand]).sort().forEach(type => {
+          const opt = document.createElement("option");
+          opt.value = type;
+          opt.textContent = type;
+          typeSelect.appendChild(opt);
+        });
+        typeSelect.disabled = false;
+      } else {
+        typeSelect.disabled = true;
+      }
+    });
+  });
 }
 
 function renderGrid(priceList) {
@@ -711,3 +785,59 @@ const achievementsSection = document.querySelector(".achievements-container");
 if (achievementsSection) {
   counterObserver.observe(achievementsSection);
 }
+
+// ================= CEMENT CALCULATOR LOGIC =================
+document.addEventListener('DOMContentLoaded', () => {
+  const calcModal = document.getElementById('calcModal');
+  const floatCalcBtn = document.getElementById('floatCalc');
+  const navCalcBtns = document.querySelectorAll('.nav-calc-btn');
+  const calcClose = document.querySelector('.calc-close');
+  const workTypeSelect = document.getElementById('workType');
+  const areaInput = document.getElementById('areaInput');
+  const calcResult = document.getElementById('calcResult');
+
+  // Safety check, wait maybe the modal isn't injected yet on some pages
+  if (!calcModal) return;
+
+  function openModal(e) {
+    if (e) e.preventDefault();
+    calcModal.classList.add('show');
+  }
+
+  function closeModal() {
+    calcModal.classList.remove('show');
+  }
+
+  function calculateBags() {
+    const area = parseFloat(areaInput.value) || 0;
+    const ratio = parseFloat(workTypeSelect.value) || 0;
+    const bags = Math.ceil(area * ratio);
+    calcResult.innerText = bags + " Bags";
+  }
+
+  // Event Listeners for opening/closing
+  if (floatCalcBtn) {
+    floatCalcBtn.addEventListener('click', openModal);
+  }
+  
+  navCalcBtns.forEach(btn => {
+    btn.addEventListener('click', openModal);
+  });
+
+  if (calcClose) {
+    calcClose.addEventListener('click', closeModal);
+  }
+
+  // Close when clicking outside modal box
+  calcModal.addEventListener('click', (e) => {
+    if (e.target === calcModal) {
+      closeModal();
+    }
+  });
+
+  // Calculation listeners
+  if (workTypeSelect && areaInput) {
+    workTypeSelect.addEventListener('change', calculateBags);
+    areaInput.addEventListener('input', calculateBags);
+  }
+});

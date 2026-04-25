@@ -88,7 +88,7 @@ async function fetchPrices() {
     if (grid) {
       grid.innerHTML = `
         <div style="color:#fff; text-align:center; padding:40px; font-size:1.1rem;">
-          <p style="font-size:2rem; margin-bottom:10px;">âš ï¸</p>
+          <p style="font-size:2rem; margin-bottom:10px;">⚠️</p>
           <p><strong>Prices could not be loaded right now.</strong></p>
           <p style="margin-top:8px; color:#9ecbff;">Please contact us directly for current prices.</p>
           <a href="https://wa.me/918248644610" target="_blank" style="display:inline-block; margin-top:20px; background:#25d366; color:#fff; padding:12px 28px; border-radius:50px; text-decoration:none; font-weight:600;">📲 WhatsApp Us</a>

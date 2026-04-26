@@ -47,7 +47,21 @@ const tileAdhesiveStaticData = {
 };
 
 // Fallback Data (Used if Google Sheet fails or during setup)
-// No fallback prices — all data comes from the Google Sheet only.
+const fallbackPriceData = [
+  { Product: "Cement", Brand: "Chettinad", Type: "PPC", Price: "" },
+  { Product: "Cement", Brand: "Chettinad", Type: "OPC 53", Price: "" },
+  { Product: "Cement", Brand: "ACC", Type: "PPC", Price: "" },
+  { Product: "Cement", Brand: "ACC", Type: "OPC 53", Price: "" },
+  { Product: "Cement", Brand: "UltraTech", Type: "PPC", Price: "" },
+  { Product: "Cement", Brand: "UltraTech", Type: "OPC 53", Price: "" },
+  { Product: "Cement", Brand: "Ramco", Type: "PPC", Price: "" },
+  { Product: "Cement", Brand: "Ramco", Type: "OPC 53", Price: "" },
+  { Product: "Cement", Brand: "Dalmia", Type: "PPC", Price: "" },
+  { Product: "Cement", Brand: "Dalmia", Type: "OPC 53", Price: "" },
+  { Product: "Cement", Brand: "Maha", Type: "PPC", Price: "" },
+  { Product: "Cement", Brand: "Maha", Type: "OPC 53", Price: "" },
+  { Product: "Tile Adhesive", Brand: "Hardworker", Type: "Standard", Price: "" },
+];
 
 // ================= IMAGE FORMAT HELPER =================
 // Tries .jpg → .jpeg → .png → .webp in order, then falls back to brand logo
@@ -98,20 +112,21 @@ async function fetchPrices() {
     setupDynamicForms(priceData);
   } catch (error) {
     console.error("Could not load prices from sheet. Reason:", error);
-    // Show a friendly message in the grid instead of fallback prices
-    const grid = document.getElementById("productsGrid");
-    if (grid) {
-      grid.innerHTML = `
-        <div style="color:#fff; text-align:center; padding:40px; font-size:1.1rem;">
-          <p style="font-size:2rem; margin-bottom:10px;">⚠️</p>
-          <p><strong>Prices could not be loaded right now.</strong></p>
-          <p style="margin-top:8px; color:#9ecbff;">Please contact us directly for current prices.</p>
-          <a href="https://wa.me/918248644610" target="_blank" style="display:inline-block; margin-top:20px; background:#25d366; color:#fff; padding:12px 28px; border-radius:50px; text-decoration:none; font-weight:600;">📲 WhatsApp Us</a>
-        </div>`;
-    }
-    const tileGrid = document.getElementById("tileAdhesiveGrid");
-    if (tileGrid) {
-      tileGrid.innerHTML = `<div style="color:#fff; text-align:center; padding:40px; font-size:1.1rem;"><p>Prices could not be loaded. Please contact us.</p></div>`;
+    
+    // Use fallback data so the page isn't empty
+    if (typeof fallbackPriceData !== "undefined") {
+      renderGrid(fallbackPriceData);
+      renderTileGrid(fallbackPriceData);
+      setupDynamicForms(fallbackPriceData);
+      
+      // Optionally add a small notice that prices are for enquiry only
+      console.log("Using local fallback data due to fetch error.");
+    } else {
+      // Hard fallback message if even fallback data is missing
+      const grid = document.getElementById("productsGrid");
+      if (grid) {
+        grid.innerHTML = `<div style="color:#fff; text-align:center; padding:40px;"><p>Prices could not be loaded. Please contact us.</p></div>`;
+      }
     }
   }
 }
@@ -266,7 +281,7 @@ function renderGrid(priceList) {
       if (imgVal && imgVal.trim()) {
         imgVal = imgVal.trim();
         if (!imgVal.toLowerCase().startsWith('image_')) {
-          imgVal = 'image_' + imgVal;
+          imgVal = 'Image_' + imgVal;
         }
         typeBasePath = `Images/${imgVal}`;
       } else {
@@ -425,7 +440,7 @@ function renderTileGrid(priceList) {
       if (imgVal && imgVal.trim()) {
         imgVal = imgVal.trim();
         if (!imgVal.toLowerCase().startsWith('image_')) {
-          imgVal = 'image_' + imgVal;
+          imgVal = 'Image_' + imgVal;
         }
         typeBasePath = `Images/${imgVal}`;
       } else {

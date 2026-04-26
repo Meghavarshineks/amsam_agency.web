@@ -287,7 +287,7 @@ function renderGrid(priceList) {
                          onerror="onTypeImgError(this, '${typeBasePath}', '${fallbackImg}')">
                 </div>
                 <div class="type-card-price">${priceDisplay}</div>
-                <button class="type-order-btn" onclick="orderSpecific('${brandName}', '${prod.Type || 'Standard'}', '${priceForOrder}'); event.stopPropagation();">Order Now</button>
+                <button class="type-order-btn" onclick="orderSpecific('${brandName}', '${prod.Type || 'Standard'}', '${priceForOrder}', '${prod.Product || 'Cement'}'); event.stopPropagation();">Order Now</button>
             </div>
         `;
     });
@@ -449,7 +449,7 @@ function renderTileGrid(priceList) {
                          onerror="onTypeImgError(this, '${typeBasePath}', '${fallbackImg}')">
                 </div>
                 <div class="type-card-price">${priceDisplay}</div>
-                <button class="type-order-btn" onclick="orderSpecific('${brandName}', '${prod.Type || 'Standard'}', '${priceForOrder}'); event.stopPropagation();">Order Now</button>
+                <button class="type-order-btn" onclick="orderSpecific('${brandName}', '${prod.Type || 'Standard'}', '${priceForOrder}', '${prod.Product || 'Tile Adhesive'}'); event.stopPropagation();">Order Now</button>
             </div>
         `;
     });
@@ -473,6 +473,11 @@ function renderTileGrid(priceList) {
 
     grid.appendChild(card);
   });
+
+  // Initialize Globe if it's the globe container
+  if (grid.classList.contains("globe-container")) {
+    initGlobe();
+  }
 }
 
 // ================= MODAL LOGIC =================
@@ -510,8 +515,9 @@ function openModal(brandName, staticInfo, products) {
   }
 
   // Set "General Enquire" button
+  const category = products.length > 0 && products[0].Product ? products[0].Product : "Cement";
   document.getElementById("modalEnquireBtn").onclick = () =>
-    orderSpecific(brandName, "General Enquiry", "N/A");
+    orderSpecific(brandName, "General Enquiry", "N/A", category);
 
   modal.classList.add("active");
   document.body.style.overflow = "hidden"; // Prevent background scroll while modal open
@@ -587,14 +593,17 @@ window.onclick = (event) => {
 };
 
 // Order Specific Item
-function orderSpecific(brand, type, price) {
+function orderSpecific(brand, type, price, category = "Cement") {
   const phoneNumber = "918248644610";
   let text = "";
 
+  // Normalize category for display (Title Case)
+  const displayCategory = category.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+
   if (price !== "N/A") {
-    text = `Hello, I would like to order ${brand} Cement (${type}). \nSeen Price: ₹${price}. \nPlease confirm availability.`;
+    text = `Hello, I would like to order ${brand} ${displayCategory} (${type}). \nSeen Price: ₹${price}. \nPlease confirm availability.`;
   } else {
-    text = `Hello, I would like to enquire about ${brand} Cement.`;
+    text = `Hello, I would like to enquire about ${brand} ${displayCategory}.`;
   }
 
   window.open(

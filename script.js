@@ -249,7 +249,7 @@ function renderGrid(priceList) {
     };
 
     const card = document.createElement("a");
-    card.className = "counter-box globe-item";
+    card.className = "counter-box parallax-card";
     card.href = "javascript:void(0)";
 
     card.onclick = function (e) {
@@ -312,61 +312,58 @@ function renderGrid(priceList) {
     grid.appendChild(card);
   });
 
-  // Initialize Globe if it's the globe container
-  if (grid.classList.contains("globe-container")) {
-    initGlobe();
+  // Initialize Parallax if it's the parallax container
+  if (grid.classList.contains("parallax-container")) {
+    initParallax();
   }
 }
 
-// ================= GLOBE LOGIC =================
-function initGlobe() {
-  const globeItems = document.querySelectorAll(".globe-container .globe-item");
-  if (!globeItems.length) return;
+// ================= PARALLAX LOGIC =================
+function initParallax() {
+  const parallaxItems = document.querySelectorAll(".parallax-container .parallax-card");
+  if (!parallaxItems.length) return;
 
-  const HEADER_H = 70; // Fixed header height in px
+  const HEADER_H = 70;
 
-  function updateGlobe() {
+  function updateParallax() {
     if (document.body.classList.contains("split-active")) return;
 
-    // Visual centre = midpoint of the area below the header
     const visibleH = window.innerHeight - HEADER_H;
     const centerY = HEADER_H + visibleH / 2;
+    const spread = visibleH * 0.5;
 
-    // Spread zone: 40% of the visible height on each side feels natural
-    const spread = visibleH * 0.42;
-
-    globeItems.forEach((item) => {
+    parallaxItems.forEach((item) => {
       const rect = item.getBoundingClientRect();
       const itemCenterY = rect.top + rect.height / 2;
       const dist = itemCenterY - centerY;
 
-      // Clamp ratio to [-1, 1]
       let ratio = dist / spread;
       if (ratio > 1) ratio = 1;
       if (ratio < -1) ratio = -1;
 
       const absRatio = Math.abs(ratio);
+      
+      // Parallax: Vertical shift based on distance from center
+      // Items at the bottom move slightly faster (offset upwards)
+      // Items at the top move slightly slower (offset downwards)
+      const offset = dist * 0.12; 
+      const scale = 1 - absRatio * 0.08;   // Subtle scale
+      const opacity = 1 - absRatio * 0.6;    // Subtle fade
 
-      const angle = ratio * -55;           // max ±55° tilt
-      const scale = 1 - absRatio * 0.22;   // 1.0 → 0.78 at edges
-      const opacity = 1 - absRatio * 0.65;   // 1.0 → 0.35 at edges
-
-      item.style.transform = `rotateX(${angle}deg) scale(${scale})`;
-      item.style.opacity = Math.max(opacity, 0.1); // never fully invisible
+      item.style.transform = `translateY(${offset}px) scale(${scale})`;
+      item.style.opacity = Math.max(opacity, 0.2);
     });
   }
 
   window.addEventListener("scroll", () => {
-    requestAnimationFrame(updateGlobe);
+    requestAnimationFrame(updateParallax);
   });
 
-  // Also re-run on resize so spread stays correct
   window.addEventListener("resize", () => {
-    requestAnimationFrame(updateGlobe);
+    requestAnimationFrame(updateParallax);
   });
 
-  // Initial call
-  updateGlobe();
+  updateParallax();
 }
 
 function renderTileGrid(priceList) {
@@ -411,7 +408,7 @@ function renderTileGrid(priceList) {
     };
 
     const card = document.createElement("a");
-    card.className = "counter-box";
+    card.className = "counter-box parallax-card";
     card.href = "javascript:void(0)";
 
     card.onclick = function (e) {
@@ -474,9 +471,9 @@ function renderTileGrid(priceList) {
     grid.appendChild(card);
   });
 
-  // Initialize Globe if it's the globe container
-  if (grid.classList.contains("globe-container")) {
-    initGlobe();
+  // Initialize Parallax if it's the parallax container
+  if (grid.classList.contains("parallax-container")) {
+    initParallax();
   }
 }
 
@@ -529,7 +526,7 @@ function openModal(brandName, staticInfo, products) {
 // ================= CARD EXPAND/COLLAPSE =================
 function toggleCard(card) {
   // Close any other expanded card first and reset their icons
-  document.querySelectorAll('.counter-box.expanded, .globe-item.expanded').forEach(other => {
+  document.querySelectorAll('.counter-box.expanded, .parallax-card.expanded').forEach(other => {
     if (other !== card) {
       other.classList.remove('expanded');
       const otherIcon = other.querySelector('.expand-icon');
@@ -555,7 +552,7 @@ function toggleCard(card) {
     if (text) text.textContent = 'View Types';
   }
 
-  // Recalculate globe positions
+  // Recalculate parallax positions
   window.dispatchEvent(new Event('scroll'));
 }
 

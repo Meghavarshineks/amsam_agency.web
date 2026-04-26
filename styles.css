@@ -487,32 +487,28 @@ nav ul li a:hover {
 }
 
 /* ================= GLOBE CAROUSEL ================= */
-.globe-container {
+.parallax-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 28px;
   padding: 20px 0 200px 0;
-  /* perspective must be on the parent of the transformed elements */
-  perspective: 1200px;
-  perspective-origin: 50% 50%;
+  will-change: scroll-position;
 }
 
-.globe-item {
+.parallax-card {
   transition:
-    transform 0.18s ease-out,
-    opacity 0.18s ease-out;
+    transform 0.1s ease-out,
+    opacity 0.1s ease-out;
   transform-origin: center center;
-  /* Ensure the element itself doesn't create a new stacking context that breaks perspective */
-  transform-style: flat;
   will-change: transform, opacity;
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
 }
 
-/* Prevent counter-box hover from fighting the JS globe transform */
-.globe-item.counter-box:hover {
+/* Prevent counter-box hover from fighting the JS parallax transform */
+.parallax-card.counter-box:hover {
   transform: none; /* JS controls transform; just keep styling changes */
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   background: #ffffff;

@@ -147,10 +147,13 @@
             <span class="calc-close">&times;</span>
             <h3>Material Calculator</h3>
 
-            <!-- Product Tabs -->
-            <div class="calc-tabs">
-                <button class="calc-tab active" data-tab="cement" id="tabCement">🏗️ Cement</button>
-                <button class="calc-tab" data-tab="tile" id="tabTile">🪟 Tile Adhesive</button>
+            <!-- Product Selector Dropdown -->
+            <div class="calc-form-group">
+                <label for="calcProductSelect">Product:</label>
+                <select id="calcProductSelect">
+                    <option value="cement">🏗️ Cement</option>
+                    <option value="tile">🪟 Tile Adhesive</option>
+                </select>
             </div>
 
             <!-- CEMENT PANEL -->
@@ -159,7 +162,7 @@
                     <label for="workType">Type of Work:</label>
                     <select id="workType">
                         <option value="0.4">Concrete Slab / Roof (M20)</option>
-                        <option value="0.12">Brickwork / Masonry (9&quot; wall)</option>
+                        <option value="0.12">Brickwork / Masonry (10&quot; wall)</option>
                         <option value="0.08">Plastering (12mm thickness)</option>
                     </select>
                 </div>

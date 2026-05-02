@@ -838,20 +838,21 @@ document.addEventListener('DOMContentLoaded', () => {
   if (calcClose) calcClose.addEventListener('click', closeModal);
   calcModal.addEventListener('click', (e) => { if (e.target === calcModal) closeModal(); });
 
-  // ---- Tab Switching ----
-  const tabs = calcModal.querySelectorAll('.calc-tab');
+  // ---- Product Dropdown Switching ----
+  const calcProductSelect = document.getElementById('calcProductSelect');
   const panelCement = document.getElementById('panelCement');
   const panelTile   = document.getElementById('panelTile');
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      const which = tab.dataset.tab;
-      if (panelCement) panelCement.style.display = (which === 'cement') ? '' : 'none';
-      if (panelTile)   panelTile.style.display   = (which === 'tile')   ? '' : 'none';
-    });
-  });
+  function switchCalcPanel(which) {
+    if (panelCement) panelCement.style.display = (which === 'cement') ? '' : 'none';
+    if (panelTile)   panelTile.style.display   = (which === 'tile')   ? '' : 'none';
+  }
+
+  if (calcProductSelect) {
+    // Set initial state based on dropdown default value
+    switchCalcPanel(calcProductSelect.value);
+    calcProductSelect.addEventListener('change', () => switchCalcPanel(calcProductSelect.value));
+  }
 
   // ---- CEMENT Calculation ----
   // Formula: area (sq ft) × ratio (bags per sq ft) → round up

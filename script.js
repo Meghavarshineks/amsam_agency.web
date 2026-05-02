@@ -309,7 +309,7 @@ function renderGrid(priceList) {
     typesHtml += `</div>`;
 
     const hasManyTypes = products.length > 2;
-    const scrollHintHtml = hasManyTypes ? `<div class="scroll-hint-overlay"><span>Scroll 👉</span></div>` : '';
+    const scrollHintHtml = hasManyTypes ? `<div class="scroll-hint-overlay"><span class="sh-label">Scroll</span><div class="sh-track"><div class="ch"></div><div class="ch"></div><div class="ch"></div></div></div>` : '';
 
     card.innerHTML = `
         <div class="card-left-content">
@@ -468,7 +468,7 @@ function renderTileGrid(priceList) {
     typesHtml += `</div>`;
 
     const hasManyTypes = products.length > 2;
-    const scrollHintHtml = hasManyTypes ? `<div class="scroll-hint-overlay"><span>Scroll 👉</span></div>` : '';
+    const scrollHintHtml = hasManyTypes ? `<div class="scroll-hint-overlay"><span class="sh-label">Scroll</span><div class="sh-track"><div class="ch"></div><div class="ch"></div><div class="ch"></div></div></div>` : '';
 
     card.innerHTML = `
         <div class="card-left-content">
@@ -815,74 +815,90 @@ if (achievementsSection) {
   counterObserver.observe(achievementsSection);
 }
 
-// ================= CEMENT CALCULATOR LOGIC =================
+// ================= MATERIAL CALCULATOR LOGIC =================
 document.addEventListener('DOMContentLoaded', () => {
   const calcModal = document.getElementById('calcModal');
   const floatCalcBtn = document.getElementById('floatCalc');
   const navCalcBtns = document.querySelectorAll('.nav-calc-btn');
   const calcClose = document.querySelector('.calc-close');
-  const workTypeSelect = document.getElementById('workType');
-  const areaInput = document.getElementById('areaInput');
-  const calcLength = document.getElementById('calcLength');
-  const calcHeight = document.getElementById('calcHeight');
-  const calcResult = document.getElementById('calcResult');
 
-  // Safety check, wait maybe the modal isn't injected yet on some pages
   if (!calcModal) return;
 
+  // ---- Open / Close ----
   function openModal(e) {
     if (e) e.preventDefault();
     calcModal.classList.add('show');
   }
-
   function closeModal() {
     calcModal.classList.remove('show');
   }
 
-  function calculateBags() {
+  if (floatCalcBtn) floatCalcBtn.addEventListener('click', openModal);
+  navCalcBtns.forEach(btn => btn.addEventListener('click', openModal));
+  if (calcClose) calcClose.addEventListener('click', closeModal);
+  calcModal.addEventListener('click', (e) => { if (e.target === calcModal) closeModal(); });
+
+  // ---- Tab Switching ----
+  const tabs = calcModal.querySelectorAll('.calc-tab');
+  const panelCement = document.getElementById('panelCement');
+  const panelTile   = document.getElementById('panelTile');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const which = tab.dataset.tab;
+      if (panelCement) panelCement.style.display = (which === 'cement') ? '' : 'none';
+      if (panelTile)   panelTile.style.display   = (which === 'tile')   ? '' : 'none';
+    });
+  });
+
+  // ---- CEMENT Calculation ----
+  // Formula: area (sq ft) × ratio (bags per sq ft) → round up
+  const workTypeSelect = document.getElementById('workType');
+  const calcLength     = document.getElementById('calcLength');
+  const calcHeight     = document.getElementById('calcHeight');
+  const areaInput      = document.getElementById('areaInput');
+  const calcResult     = document.getElementById('calcResult');
+
+  function calculateCementBags() {
+    if (!calcResult) return;
     let area = 0;
     if (calcLength && calcHeight) {
       area = (parseFloat(calcLength.value) || 0) * (parseFloat(calcHeight.value) || 0);
     } else if (areaInput) {
       area = parseFloat(areaInput.value) || 0;
     }
-    
-    const ratio = parseFloat(workTypeSelect.value) || 0;
-    const bags = Math.ceil(area * ratio);
-    calcResult.innerText = bags + " Bags";
+    const ratio = parseFloat(workTypeSelect ? workTypeSelect.value : 0) || 0;
+    const bags  = area > 0 ? Math.ceil(area * ratio) : 0;
+    calcResult.innerText = bags + ' Bags';
   }
 
-  // Event Listeners for opening/closing
-  if (floatCalcBtn) {
-    floatCalcBtn.addEventListener('click', openModal);
+  if (workTypeSelect) workTypeSelect.addEventListener('change', calculateCementBags);
+  if (calcLength)     calcLength.addEventListener('input', calculateCementBags);
+  if (calcHeight)     calcHeight.addEventListener('input', calculateCementBags);
+  if (areaInput)      areaInput.addEventListener('input', calculateCementBags);
+
+  // ---- TILE ADHESIVE Calculation ----
+  // Formula: area sq ft → sq m (÷ 10.764) × kg/m² ÷ 20 kg per bag → round up
+  const tileWorkType = document.getElementById('tileWorkType');
+  const tileLength   = document.getElementById('tileLength');
+  const tileHeight   = document.getElementById('tileHeight');
+  const tileResult   = document.getElementById('tileResult');
+
+  function calculateTileBags() {
+    if (!tileResult) return;
+    const lenFt  = parseFloat(tileLength  ? tileLength.value  : 0) || 0;
+    const htFt   = parseFloat(tileHeight  ? tileHeight.value  : 0) || 0;
+    const kgPerM2 = parseFloat(tileWorkType ? tileWorkType.value : 4) || 4;
+    const areaSqFt = lenFt * htFt;
+    const areaSqM  = areaSqFt / 10.764;
+    const totalKg  = areaSqM * kgPerM2;
+    const bags     = areaSqFt > 0 ? Math.ceil(totalKg / 20) : 0;
+    tileResult.innerText = bags + ' Bags';
   }
 
-  navCalcBtns.forEach(btn => {
-    btn.addEventListener('click', openModal);
-  });
-
-  if (calcClose) {
-    calcClose.addEventListener('click', closeModal);
-  }
-
-  // Close when clicking outside modal box
-  calcModal.addEventListener('click', (e) => {
-    if (e.target === calcModal) {
-      closeModal();
-    }
-  });
-
-  // Calculation listeners
-  if (workTypeSelect) {
-    workTypeSelect.addEventListener('change', calculateBags);
-  }
-  if (calcLength) {
-    calcLength.addEventListener('input', calculateBags);
-  }
-  if (calcHeight) {
-    calcHeight.addEventListener('input', calculateBags);
-  }
-  if (areaInput) {
-    areaInput.addEventListener('input', calculateBags);
-  }
+  if (tileWorkType) tileWorkType.addEventListener('change', calculateTileBags);
+  if (tileLength)   tileLength.addEventListener('input', calculateTileBags);
+  if (tileHeight)   tileHeight.addEventListener('input', calculateTileBags);
 });

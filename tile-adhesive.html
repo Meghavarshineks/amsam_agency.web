@@ -139,30 +139,63 @@
     </div>
 
     <!-- Floating Calculator -->
-    <div id="floatCalc" class="float-calculator" title="Cement Calculator">🧮</div>
+    <div id="floatCalc" class="float-calculator" title="Material Calculator">🧮</div>
 
     <!-- Calculator Modal -->
     <div id="calcModal" class="calc-modal">
         <div class="calc-modal-content">
             <span class="calc-close">&times;</span>
-            <h3>Cement Calculator</h3>
-            <div class="calc-form-group">
-                <label for="workType">Type of Work:</label>
-                <select id="workType">
-                    <option value="0.4">Concrete Slab / Roof (M20)</option>
-                    <option value="0.12">Brickwork / Masonry (9" wall)</option>
-                    <option value="0.08">Plastering (12mm thickness)</option>
-                </select>
+            <h3>Material Calculator</h3>
+
+            <!-- Product Tabs -->
+            <div class="calc-tabs">
+                <button class="calc-tab" data-tab="cement" id="tabCement">🏗️ Cement</button>
+                <button class="calc-tab active" data-tab="tile" id="tabTile">🪟 Tile Adhesive</button>
             </div>
-            <div class="calc-form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <div><label for="calcLength">Length (Feet):</label><input type="number" id="calcLength" placeholder="e.g. 50" min="0"></div>
-                <div><label for="calcHeight">Height (Feet):</label><input type="number" id="calcHeight" value="10" min="0"></div>
+
+            <!-- CEMENT PANEL -->
+            <div class="calc-panel" id="panelCement" style="display:none;">
+                <div class="calc-form-group">
+                    <label for="workType">Type of Work:</label>
+                    <select id="workType">
+                        <option value="0.4">Concrete Slab / Roof (M20)</option>
+                        <option value="0.12">Brickwork / Masonry (9&quot; wall)</option>
+                        <option value="0.08">Plastering (12mm thickness)</option>
+                    </select>
+                </div>
+                <div class="calc-form-group calc-grid-2">
+                    <div><label for="calcLength">Length (Feet):</label><input type="number" id="calcLength" placeholder="e.g. 20" min="0"></div>
+                    <div><label for="calcHeight">Height (Feet):</label><input type="number" id="calcHeight" value="10" min="0"></div>
+                </div>
+                <input type="hidden" id="areaInput">
+                <div class="calc-result-box">
+                    <p>Estimated Cement Required:</p>
+                    <div class="calc-result-number" id="calcResult">0 Bags</div>
+                    <p class="calc-note">Based on 50 kg bags</p>
+                </div>
             </div>
-            <input type="hidden" id="areaInput">
-            <div class="calc-result-box">
-                <p>Estimated Required:</p>
-                <div class="calc-result-number" id="calcResult">0 Bags</div>
+
+            <!-- TILE ADHESIVE PANEL -->
+            <div class="calc-panel" id="panelTile">
+                <div class="calc-form-group">
+                    <label for="tileWorkType">Type of Application:</label>
+                    <select id="tileWorkType">
+                        <option value="4">Wall Tiling (Standard)</option>
+                        <option value="5">Floor Tiling (Heavy Duty)</option>
+                        <option value="3">Wall Tiling (Light / Mosaic)</option>
+                    </select>
+                </div>
+                <div class="calc-form-group calc-grid-2">
+                    <div><label for="tileLength">Wall Length (Feet):</label><input type="number" id="tileLength" placeholder="e.g. 10" min="0"></div>
+                    <div><label for="tileHeight">Wall Height (Feet):</label><input type="number" id="tileHeight" value="10" min="0"></div>
+                </div>
+                <div class="calc-result-box">
+                    <p>Estimated Tile Adhesive Required:</p>
+                    <div class="calc-result-number" id="tileResult">0 Bags</div>
+                    <p class="calc-note">Based on 20 kg bags (~4–5 kg/m²)</p>
+                </div>
             </div>
+
         </div>
     </div>
 

@@ -11,6 +11,48 @@
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet" />
+  <!-- Local Business Schema Markup for Local SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["WholesaleStore", "ConstructionBusiness"],
+    "name": "Amsam Agency",
+    "image": "https://amsamagency.com/Images/Amsam_logo_transparent.png",
+    "@id": "https://amsamagency.com/#organization",
+    "url": "https://amsamagency.com",
+    "telephone": "+918248644610",
+    "priceRange": "$$",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Punjai Puliyampatti",
+      "addressLocality": "Erode",
+      "addressRegion": "Tamil Nadu",
+      "postalCode": "638459",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 11.3507635,
+      "longitude": 77.1679423
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "opens": "09:00",
+      "closes": "20:00"
+    },
+    "sameAs": [
+      "https://instagram.com/amsam_agency"
+    ]
+  }
+  </script>
 </head>
 
 <body>
@@ -240,6 +282,51 @@
 </section>
 -->
 
+  <!-- REVIEWS SECTION -->
+  <section id="reviews" class="reviews-section content-section">
+    <div class="reviews-header animate-on-scroll">
+      <h2>Customer Reviews</h2>
+      <p>Building trust with contractors, builders, and homeowners across Tamil Nadu.</p>
+    </div>
+
+    <div class="reviews-container animate-on-scroll">
+      <!-- Ratings Overview Card -->
+      <div class="reviews-overview">
+        <div class="overview-rating">4.8</div>
+        <div class="stars-display">
+          <span class="star filled">★</span>
+          <span class="star filled">★</span>
+          <span class="star filled">★</span>
+          <span class="star filled">★</span>
+          <span class="star filled">★</span>
+        </div>
+        <p class="rating-subtitle">Based on 20+ Google & Justdial Reviews</p>
+        <p class="rating-desc">Consistent quality cement supply, reliable logistics, and excellent customer service.</p>
+        <a href="https://maps.google.com/maps?q=11.3507635,77.1679423&z=15" target="_blank" class="btn review-write-btn">
+          Write a Review
+        </a>
+      </div>
+
+      <!-- Reviews Carousel -->
+      <div class="reviews-carousel-wrapper">
+        <button class="carousel-nav-btn prev-btn" aria-label="Previous Review">
+          <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </button>
+        
+        <div class="reviews-carousel-track-container">
+          <div class="reviews-carousel-track" id="reviewsCarouselTrack">
+            <!-- Populated dynamically by script.js -->
+            <div class="loading-spinner">Loading reviews...</div>
+          </div>
+        </div>
+
+        <button class="carousel-nav-btn next-btn" aria-label="Next Review">
+          <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
   <section id="enquire" class="enquire-section">
     <h2>Enquire</h2>
     <p class="helper-text">Choose your preferred way to contact us</p>

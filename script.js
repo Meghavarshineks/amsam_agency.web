@@ -903,3 +903,297 @@ document.addEventListener('DOMContentLoaded', () => {
   if (tileLength)   tileLength.addEventListener('input', calculateTileBags);
   if (tileHeight)   tileHeight.addEventListener('input', calculateTileBags);
 });
+
+// ================= GOOGLE REVIEWS INTEGRATION =================
+// To fetch reviews dynamically from your Google Sheet:
+// 1. In your Google Sheet, create a new tab called "Reviews" with columns: Name, Date, Stars, Text, Source, AvatarBg
+// 2. Go to File > Share > Publish to web. Choose the "Reviews" tab and select "Comma-separated values (.csv)".
+// 3. Paste the published CSV URL below. If empty, the website uses the built-in fallback reviews.
+const REVIEWS_CSV_URL = ""; 
+
+const defaultReviews = [
+  {
+    name: "Senthil Kumar",
+    avatarBg: "avatar-bg-1",
+    date: "1 week ago",
+    stars: 5,
+    text: "Excellent service and genuine pricing. We purchased 450 bags of ACC cement for our commercial project in Erode. Prompt delivery on site. Strongly recommend Amsam Agency for wholesale requirements.",
+    source: "google"
+  },
+  {
+    name: "Ramanathan P.",
+    avatarBg: "avatar-bg-2",
+    date: "3 weeks ago",
+    stars: 5,
+    text: "Being a builder in Tiruppur, I always prefer Amsam Agency for bulk supply. Their cement grades are always fresh and standard, and their prices are unbeatable. Very transparent dealer.",
+    source: "justdial"
+  },
+  {
+    name: "Meenakshi Sundaram",
+    avatarBg: "avatar-bg-3",
+    date: "1 month ago",
+    stars: 5,
+    text: "Very reliable delivery. Ordered 150 bags of Chettinad PPC and Ramco cement. The coordination was seamless, and the transport vehicle arrived exactly on time as promised.",
+    source: "google"
+  },
+  {
+    name: "Ganesh K.",
+    avatarBg: "avatar-bg-4",
+    date: "1 month ago",
+    stars: 5,
+    text: "We ordered Ramco Hard Worker tile adhesive and UltraTech cement for our house renovation. The quality is top-notch, and the proprietor Mr. Janaa guided us nicely on the quantity needed.",
+    source: "google"
+  },
+  {
+    name: "Karthikeyan B.",
+    avatarBg: "avatar-bg-5",
+    date: "2 months ago",
+    stars: 5,
+    text: "One of the oldest and most trusted wholesale cement suppliers in Punjai Puliyampatti. They maintain a solid stock of multiple premium brands. Customer support is very polite.",
+    source: "justdial"
+  }
+];
+
+fetchReviews();
+
+async function fetchReviews() {
+  const track = document.getElementById("reviewsCarouselTrack");
+  if (!track) return; // Exit early if we are not on the homepage
+
+  if (!REVIEWS_CSV_URL) {
+    initReviewsCarousel(defaultReviews);
+    return;
+  }
+
+  try {
+    const response = await fetch(REVIEWS_CSV_URL);
+    if (!response.ok) throw new Error("Reviews sheet not found");
+    const csvText = await response.text();
+    
+    // Basic validation: Check if it looks like HTML (e.g. login page)
+    if (
+      csvText.trim().toLowerCase().startsWith("<!doctype html") ||
+      csvText.trim().toLowerCase().startsWith("<html")
+    ) {
+      throw new Error("Fetched data appears to be HTML, not CSV");
+    }
+
+    const parsedReviews = parseCSV(csvText);
+    
+    // Validate we got reviews with at least name and text
+    if (parsedReviews.length > 0 && (parsedReviews[0].hasOwnProperty("Name") || parsedReviews[0].hasOwnProperty("name"))) {
+      const formattedReviews = parsedReviews.map((item, idx) => {
+        const nameVal = item.Name || item.name || "Verified Customer";
+        const textVal = item.Text || item.text || item.Review || item.review || "";
+        const dateVal = item.Date || item.date || "Recently";
+        const starsVal = parseInt(item.Stars || item.stars || item.Rating || item.rating) || 5;
+        const sourceVal = (item.Source || item.source || "google").trim().toLowerCase();
+        const avatarBgVal = item.AvatarBg || item.avatarBg || item.avatar_bg || `avatar-bg-${(idx % 5) + 1}`;
+        
+        return {
+          name: nameVal.trim(),
+          avatarBg: avatarBgVal.trim(),
+          date: dateVal.trim(),
+          stars: starsVal,
+          text: textVal.trim(),
+          source: sourceVal
+        };
+      }).filter(r => r.text !== ""); // Only display if it has a comment
+
+      if (formattedReviews.length > 0) {
+        initReviewsCarousel(formattedReviews);
+      } else {
+        throw new Error("Parsed reviews list is empty");
+      }
+    } else {
+      throw new Error("Invalid reviews CSV structure");
+    }
+  } catch (err) {
+    console.warn("Could not load reviews from sheet. Using fallback reviews.", err.message);
+    initReviewsCarousel(defaultReviews);
+  }
+}
+
+function initReviewsCarousel(reviews) {
+  const track = document.getElementById("reviewsCarouselTrack");
+  if (!track) return;
+
+  track.innerHTML = ""; // Clear loader/spinner
+
+  reviews.forEach(rev => {
+    const card = document.createElement("div");
+    card.className = "review-slide-card";
+
+    // Create stars HTML
+    let starsHtml = "";
+    for (let i = 0; i < 5; i++) {
+      starsHtml += `<span class="star ${i < rev.stars ? 'filled' : ''}">★</span>`;
+    }
+
+    // Get source icons (Google vs Justdial)
+    let sourceIconSvg = "";
+    if (rev.source === "google") {
+      sourceIconSvg = `
+        <svg viewBox="0 0 24 24" fill="#EA4335">
+          <path d="M12.24 10.285V13.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.859-3.579-7.859-8s3.53-8 7.859-8c2.46 0 4.105 1.025 5.047 1.926l2.427-2.334C17.955 2.192 15.34 1 12.24 1 6.033 1 1 6.033 1 12.24s5.033 11.24 11.24 11.24c6.478 0 10.793-4.537 10.793-10.983 0-.746-.08-1.32-.176-1.713H12.24z"/>
+        </svg>`;
+    } else {
+      sourceIconSvg = `
+        <svg viewBox="0 0 24 24" fill="#007bff">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+        </svg>`;
+    }
+
+    const initials = rev.name.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase();
+
+    card.innerHTML = `
+      <div class="review-card-top">
+        <div class="review-user">
+          <div class="review-avatar ${rev.avatarBg || 'avatar-bg-1'}">${initials}</div>
+          <div class="review-user-info">
+            <div class="review-user-name">${rev.name}</div>
+            <div class="review-date">${rev.date}</div>
+          </div>
+        </div>
+        <div class="review-card-rating">
+          ${starsHtml}
+        </div>
+      </div>
+      <div class="review-text">"${rev.text}"</div>
+      <div class="review-card-footer">
+        <span class="verified-badge">
+          <svg viewBox="0 0 20 20"><path d="M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0zm-2 15l-5-5 1.41-1.41L8 12.17l7.59-7.59L17 6l-9 9z"/></svg>
+          Verified Customer
+        </span>
+        <span class="source-icon" title="${rev.source === 'google' ? 'Google Review' : 'Justdial Review'}">
+          ${sourceIconSvg}
+        </span>
+      </div>
+    `;
+
+    track.appendChild(card);
+  });
+
+  // Slide Logic
+  let currentIndex = 0;
+  const prevBtn = document.querySelector(".carousel-nav-btn.prev-btn");
+  const nextBtn = document.querySelector(".carousel-nav-btn.next-btn");
+
+  if (!prevBtn || !nextBtn) return;
+
+  function updateButtons() {
+    if (track.children.length === 0) return;
+    const cardWidth = track.firstElementChild.getBoundingClientRect().width;
+    const gap = 24; // matches CSS gap
+    const containerWidth = track.parentElement.getBoundingClientRect().width;
+    const maxScroll = track.scrollWidth - containerWidth;
+    const currentScroll = currentIndex * (cardWidth + gap);
+
+    prevBtn.disabled = currentIndex === 0;
+    nextBtn.disabled = currentScroll >= maxScroll - 5;
+  }
+
+  function slideTo(index) {
+    if (track.children.length === 0) return;
+    const cardWidth = track.firstElementChild.getBoundingClientRect().width;
+    const gap = 24;
+    currentIndex = index;
+    
+    const containerWidth = track.parentElement.getBoundingClientRect().width;
+    const maxScroll = track.scrollWidth - containerWidth;
+    let offset = index * (cardWidth + gap);
+    
+    if (offset > maxScroll) {
+      offset = maxScroll;
+    }
+    if (offset < 0) {
+      offset = 0;
+    }
+
+    track.style.transform = `translateX(-${offset}px)`;
+    updateButtons();
+  }
+
+  prevBtn.onclick = () => {
+    if (currentIndex > 0) {
+      slideTo(currentIndex - 1);
+    }
+  };
+
+  nextBtn.onclick = () => {
+    if (track.children.length === 0) return;
+    const cardWidth = track.firstElementChild.getBoundingClientRect().width;
+    const gap = 24;
+    const containerWidth = track.parentElement.getBoundingClientRect().width;
+    const maxScroll = track.scrollWidth - containerWidth;
+    const nextScroll = (currentIndex + 1) * (cardWidth + gap);
+
+    if (nextScroll <= maxScroll + (cardWidth + gap) - 5) {
+      slideTo(currentIndex + 1);
+    }
+  };
+
+  // Touch swipe support for mobile devices
+  let startX = 0;
+  let isDragging = false;
+
+  track.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+    track.style.transition = "none";
+  }, { passive: true });
+
+  track.addEventListener("touchmove", (e) => {
+    if (!isDragging) return;
+    const currentX = e.touches[0].clientX;
+    const diff = currentX - startX;
+    
+    const cardWidth = track.firstElementChild ? track.firstElementChild.getBoundingClientRect().width : 0;
+    const gap = 24;
+    const baseOffset = currentIndex * (cardWidth + gap);
+    const translate = -baseOffset + diff;
+    
+    track.style.transform = `translateX(${translate}px)`;
+  }, { passive: true });
+
+  track.addEventListener("touchend", (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+    track.style.transition = "transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
+    
+    const endX = e.changedTouches[0].clientX;
+    const diff = endX - startX;
+    
+    const cardWidth = track.firstElementChild ? track.firstElementChild.getBoundingClientRect().width : 0;
+    
+    if (diff < -50) {
+      // Swipe left -> Next
+      const containerWidth = track.parentElement.getBoundingClientRect().width;
+      const maxScroll = track.scrollWidth - containerWidth;
+      const nextScroll = (currentIndex + 1) * (cardWidth + 24);
+      if (nextScroll <= maxScroll + (cardWidth + 24) - 5) {
+        slideTo(currentIndex + 1);
+      } else {
+        slideTo(currentIndex);
+      }
+    } else if (diff > 50) {
+      // Swipe right -> Prev
+      if (currentIndex > 0) {
+        slideTo(currentIndex - 1);
+      } else {
+        slideTo(0);
+      }
+    } else {
+      slideTo(currentIndex);
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    slideTo(currentIndex);
+  });
+
+  // Initial setting
+  setTimeout(() => {
+    slideTo(0);
+  }, 150);
+}

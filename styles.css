@@ -2802,7 +2802,7 @@ body.split-active .split-overlay {
 @media (max-width: 1024px) {
   .reviews-container {
     grid-template-columns: 1fr;
-    gap: 30px;
+    gap: 40px;
   }
   
   .reviews-overview {
@@ -2810,24 +2810,86 @@ body.split-active .split-overlay {
     margin: 0 auto;
     width: 100%;
   }
+
+  .reviews-carousel-wrapper {
+    min-width: 0; /* Fixes grid item horizontal layout overflow issue */
+  }
 }
 
 @media (max-width: 768px) {
   .reviews-section {
-    padding: 80px 20px;
+    padding: 60px 16px;
   }
-  
-  .review-slide-card {
-    flex: 0 0 100%; /* 1 card on mobile */
-    min-height: 240px;
+
+  .reviews-overview {
+    padding: 30px 20px;
   }
-  
+
   .reviews-carousel-wrapper {
-    gap: 8px;
+    gap: 0;
+    padding: 0;
+    min-width: 0;
+    position: relative;
   }
-  
+
+  /* Style side navigation buttons as elegant floating glass overlays on mobile */
   .carousel-nav-btn {
-    width: 38px;
-    height: 38px;
+    display: flex !important;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    background: rgba(10, 25, 45, 0.75) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  .prev-btn {
+    left: -8px; /* Hover in the section padding area */
+  }
+
+  .next-btn {
+    right: -8px;
+  }
+
+  .reviews-carousel-track-container {
+    padding: 10px 0;
+    width: 100%;
+  }
+
+  .reviews-carousel-track {
+    gap: 16px; /* Tighter gap for mobile screens */
+  }
+
+  .review-slide-card {
+    /* Set card width to 82% so next card peeks while leaving comfortable room for floating buttons */
+    flex: 0 0 82%;
+    min-height: 250px;
+    padding: 24px 20px;
+  }
+
+  .review-text {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    -webkit-line-clamp: 6; /* Allow slightly more text rows to fit */
+  }
+
+  .review-avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .review-user-name {
+    font-size: 0.92rem;
+  }
+
+  .review-date {
+    font-size: 0.74rem;
   }
 }

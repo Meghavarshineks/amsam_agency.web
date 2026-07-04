@@ -1081,10 +1081,16 @@ function initReviewsCarousel(reviews) {
 
   if (!prevBtn || !nextBtn) return;
 
+  function getGap() {
+    if (!track.firstElementChild) return 24;
+    const style = window.getComputedStyle(track);
+    return parseFloat(style.columnGap || style.gap) || 24;
+  }
+
   function updateButtons() {
     if (track.children.length === 0) return;
     const cardWidth = track.firstElementChild.getBoundingClientRect().width;
-    const gap = 24; // matches CSS gap
+    const gap = getGap();
     const containerWidth = track.parentElement.getBoundingClientRect().width;
     const maxScroll = track.scrollWidth - containerWidth;
     const currentScroll = currentIndex * (cardWidth + gap);
@@ -1096,7 +1102,7 @@ function initReviewsCarousel(reviews) {
   function slideTo(index) {
     if (track.children.length === 0) return;
     const cardWidth = track.firstElementChild.getBoundingClientRect().width;
-    const gap = 24;
+    const gap = getGap();
     currentIndex = index;
     
     const containerWidth = track.parentElement.getBoundingClientRect().width;
@@ -1123,7 +1129,7 @@ function initReviewsCarousel(reviews) {
   nextBtn.onclick = () => {
     if (track.children.length === 0) return;
     const cardWidth = track.firstElementChild.getBoundingClientRect().width;
-    const gap = 24;
+    const gap = getGap();
     const containerWidth = track.parentElement.getBoundingClientRect().width;
     const maxScroll = track.scrollWidth - containerWidth;
     const nextScroll = (currentIndex + 1) * (cardWidth + gap);
@@ -1149,7 +1155,7 @@ function initReviewsCarousel(reviews) {
     const diff = currentX - startX;
     
     const cardWidth = track.firstElementChild ? track.firstElementChild.getBoundingClientRect().width : 0;
-    const gap = 24;
+    const gap = getGap();
     const baseOffset = currentIndex * (cardWidth + gap);
     const translate = -baseOffset + diff;
     
@@ -1165,13 +1171,14 @@ function initReviewsCarousel(reviews) {
     const diff = endX - startX;
     
     const cardWidth = track.firstElementChild ? track.firstElementChild.getBoundingClientRect().width : 0;
+    const gap = getGap();
     
     if (diff < -50) {
       // Swipe left -> Next
       const containerWidth = track.parentElement.getBoundingClientRect().width;
       const maxScroll = track.scrollWidth - containerWidth;
-      const nextScroll = (currentIndex + 1) * (cardWidth + 24);
-      if (nextScroll <= maxScroll + (cardWidth + 24) - 5) {
+      const nextScroll = (currentIndex + 1) * (cardWidth + gap);
+      if (nextScroll <= maxScroll + (cardWidth + gap) - 5) {
         slideTo(currentIndex + 1);
       } else {
         slideTo(currentIndex);
